@@ -21,7 +21,7 @@ module.exports = (db) => {
 
   // GET post by 'id'
   router.get("/:id", (req, res) => {
-    db.query(`SELECT * FROM posts WHERE id = $1;`, [req.params.id])
+    db.query(`SELECT title FROM posts WHERE id = $1;`, [req.params.id])
       .then((result) => {
         if (result.rows.length) {
           return res.json(result.rows[0]);
@@ -31,6 +31,29 @@ module.exports = (db) => {
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
+  // GET post by 'title'
+  router.get("/search/:title", (req, res) => {
+    db.query(`SELECT * FROM posts WHERE title iLIKE $1;`, [`%${req.params.title}%`])
+      .then((result) => {
+        if (result.rows.length) {
+          return res.json(result.rows);
+        }
+        res.json({ message: "no resources found" });
+      })
+      .catch((err) => res.status(400).json({ error: err.message }));
+  });
+
+  // // GET all post by 'owner_id'
+  // router.get("/:owner_id", (req, res) => {
+  //   db.query(`SELECT title FROM posts WHERE owner_id = $1;`, [req.params.owner_id])
+  //     .then((result) => {
+  //       if (result.rows.length) {
+  //         return res.json(result.rows[0]);
+  //       }
+  //       res.json({ message: "no resources found" });
+  //     })
+  //     .catch((err) => res.status(400).json({ error: err.message }));
+  // });
 
   // POST post to create a new post
   router.post("/", (req, res) => {
@@ -42,14 +65,15 @@ module.exports = (db) => {
       req.body.category_id
     ];
     db.query(
-      `INSERT INTO VALUES
-      title = $1,
-      post_description = $2,
-      url_address = $3,
-      image_url = $4,
-      category_id = $5
+      `INSERT INTO posts (title, post_description, url_address, image_url, category_id) VALUES (
+      $1,
+      $2,
+      $3,
+      $4,
+      $5
+      )
       RETURNING *;`,
-      [queryParams]
+      queryParams
     )
       .then((res) => console.log(res.rows))
       .catch((err) => console.error(err.stack));
