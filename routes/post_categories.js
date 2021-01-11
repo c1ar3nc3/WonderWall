@@ -1,9 +1,3 @@
-/*
- * All routes for Widgets are defined here
- * Since this file is loaded in server.js into api/widgets,
- *   these routes are mounted onto /widgets
- * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
- */
 
 const express = require('express');
 const router  = express.Router();
@@ -40,20 +34,33 @@ module.exports = (db) => {
 //--------get category by post_id-------
   router.get("posts/:id", (req, res) => {
     db.query(`
-    SELECT category as post_category
+    SELECT category
     FROM post_categories
     JOIN posts ON posts.category_id = post_categories.id
-    WHERE post_categories.id = $1;`, [req.params.id])
+    WHERE posts.id = $1;`, [req.params.id])
       .then((result) => {
-        return res.json(result);
-        // if (result.rows.length) {
-
-        // }
-        // res.json({ message: "no resources found" });
+        if (result.rows.length) {
+          return res.json(result.rows);
+        }
+        res.json({ message: "no resources found" });
       })
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
 //--------get category by name----------
-  return router;
+  router.get("/search/:category", (req, res) => {
+    db.query(`
+    SELECT category
+    FROM post_categories
+    WHERE category iLike $1;`, [`%${req.params.category}%`])
+      .then((result) => {
+        if (result.rows.length) {
+          return res.json(result.rows);
+        }
+        res.json({ message: "no resources found" });
+      })
+      .catch((err) => res.status(400).json({ error: err.message }));
+  });
+
+return router;
 };
