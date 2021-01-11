@@ -10,8 +10,8 @@ module.exports = (db) => {
   });
 
   //--------------------------post login form--------------
-  router.get("/:id", (req, res) => {
-    req.session.user_id = req.params.id;
+  router.post("/", (req, res) => {
+    req.session.user_id = 1;
     res.redirect("/");
   });
 

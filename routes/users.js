@@ -27,7 +27,8 @@ module.exports = (db) => {
     getUserById(req.params.id)
       .then((result) => {
         if (result.length) {
-          return res.json(result[0]);
+          const templateVars = { user: result[0] };
+          return res.render("user_profile", templateVars);
         }
         res.json({ message: "no resources found" });
       })
@@ -35,20 +36,21 @@ module.exports = (db) => {
   });
 
   //-----------------------update user profile------------
-  router.put("/:id", (req, res) => {
+  router.post("/update/:id", (req, res) => {
     queryParams = [
       req.body.first_name || "",
       req.body.last_name || "",
       req.body.city || "",
       req.body.gender || "",
-      req.body.profile_picture || "",
-      req.params.id,
+      req.body.profile_picture ||
+        "https://i.pinimg.com/236x/74/81/a7/7481a797bb6ef4083ede2e60f47a95cd.jpg",
+      req.session.user_id,
     ];
     db.query(
       `UPDATE users SET first_name = $1, last_name = $2, city = $3, gender = $4, profile_picture = $5  WHERE id = $6 RETURNING *;`,
       queryParams
     )
-      .then((res) => console.log(res.rows))
+      .then((result) => res.redirect(`/api/users/${req.session.user_id}`))
       .catch((err) => console.error(err.stack));
   });
 
