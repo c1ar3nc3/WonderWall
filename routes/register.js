@@ -16,7 +16,7 @@ module.exports = (db) => {
     const email = req.body.email;
     const userPassword = req.body.password;
     queryParams = [userName, email, userPassword];
-    if ((userName, email && userPassword)) {
+    if (userName && email && userPassword) {
       getUserByEmail(email)
         .then((result) => {
           if (!result.length) {
