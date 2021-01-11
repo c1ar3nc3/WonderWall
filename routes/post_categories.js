@@ -32,7 +32,7 @@ module.exports = (db) => {
 
 
 //--------get category by post_id-------
-  router.get("posts/:id", (req, res) => {
+  router.get("/posts/:id", (req, res) => {
     db.query(`
     SELECT category
     FROM post_categories
