@@ -6,7 +6,7 @@ const router  = express.Router();
 module.exports = (db) => {
 
 /////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-____________________________GET___________________________________
+//___________________________GET________________________________\\
 /////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 //---------------- GET all posts to show all the posts------------
@@ -49,22 +49,22 @@ ____________________________GET___________________________________
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
-// //----------------- GET all post by 'owner_id'------------------
+//----------------- GET all post by 'owner_id'------------------
 
-//   router.get("/:owner_id", (req, res) => {
-//     db.query(`SELECT title FROM posts WHERE owner_id = $1;`, [req.params.owner_id])
-//       .then((result) => {
-//         if (result.rows.length) {
-//           return res.json(result.rows[0]);
-//         }
-//         res.json({ message: "no resources found" });
-//       })
-//       .catch((err) => res.status(400).json({ error: err.message }));
-//   });
+  router.get("/my_page/:owner_id", (req, res) => {
+    db.query(`SELECT title, post_description FROM posts WHERE owner_id = $1;`, [req.params.owner_id])
+      .then((result) => {
+        if (result.rows.length) {
+          return res.json(result.rows[0]);
+        }
+        res.json({ message: "no resources found" });
+      })
+      .catch((err) => res.status(400).json({ error: err.message }));
+  });
 
 
 /////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-_______________________________POST___________________________________
+//_____________________________POST___________________________________\\
 /////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 //------------------- POST to create a new post------------------\\
