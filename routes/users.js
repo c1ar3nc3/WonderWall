@@ -35,20 +35,20 @@ module.exports = (db) => {
   //-----------------------update user profile------------
   router.post("/:id", (req, res) => {
     queryParams = [
-      req.body.first_name,
-      req.body.last_name,
-      req.body.city,
-      req.body.gender,
-      req.body.profile_picture,
+      req.body.first_name || "",
+      req.body.last_name || "",
+      req.body.city || "",
+      req.body.gender || "",
+      req.body.profile_picture || "",
+      req.params.id,
     ];
     db.query(
-      `UPDATE TABLE users SET first_name = $1, last_name = $2, city= $3, gender = $4, profile_picture = $5 RETURNING *;`,
-      [queryParams]
+      `UPDATE users SET first_name = $1, last_name = $2, city = $3, gender = $4, profile_picture = $5  WHERE id = $6 RETURNING *;`,
+      queryParams
     )
       .then((res) => console.log(res.rows))
       .catch((err) => console.error(err.stack));
   });
-  //--------------------------
 
   return router;
 };
