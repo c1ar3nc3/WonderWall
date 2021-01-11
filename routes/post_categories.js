@@ -1,24 +1,21 @@
-
-const express = require('express');
-const router  = express.Router();
+const express = require("express");
+const router = express.Router();
 
 module.exports = (db) => {
-
-
-//----------get all categories-----------
+  //----------get all categories-----------
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM post_categories;`)
       .then((data) => {
-        const category = data.rows;
-        res.json({ category });
+        const allCategories = data.rows;
+        const templateVars = { categories: allCategories };
+        res.render("index", templateVars);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
   });
 
-
-//---------get categories by category_id---------
+  //---------get categories by category_id---------
   router.get("/:id", (req, res) => {
     db.query(`SELECT * FROM post_categories WHERE id = $1;`, [req.params.id])
       .then((result) => {
@@ -30,14 +27,16 @@ module.exports = (db) => {
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
-
-//--------get category by post_id-------
+  //--------get category by post_id-------
   router.get("/posts/:id", (req, res) => {
-    db.query(`
+    db.query(
+      `
     SELECT category
     FROM post_categories
     JOIN posts ON posts.category_id = post_categories.id
-    WHERE posts.id = $1;`, [req.params.id])
+    WHERE posts.id = $1;`,
+      [req.params.id]
+    )
       .then((result) => {
         if (result.rows.length) {
           return res.json(result.rows);
@@ -47,12 +46,15 @@ module.exports = (db) => {
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
-//--------get category by name----------
+  //--------get category by name----------
   router.get("/search/:category", (req, res) => {
-    db.query(`
+    db.query(
+      `
     SELECT category
     FROM post_categories
-    WHERE category iLike $1;`, [`%${req.params.category}%`])
+    WHERE category iLike $1;`,
+      [`%${req.params.category}%`]
+    )
       .then((result) => {
         if (result.rows.length) {
           return res.json(result.rows);
@@ -62,5 +64,5 @@ module.exports = (db) => {
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
-return router;
+  return router;
 };
