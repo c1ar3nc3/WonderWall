@@ -7,6 +7,7 @@
 
 const express = require("express");
 const router = express.Router();
+const { getUserById } = require("../helpers/userDatabaseQueries");
 
 module.exports = (db) => {
   //---------------------get all users-----------------
@@ -23,17 +24,18 @@ module.exports = (db) => {
 
   //-----------------------get user by id---------------
   router.get("/:id", (req, res) => {
-    db.query(`SELECT * FROM users WHERE id = $1;`, [req.params.id])
+    getUserById(req.params.id)
       .then((result) => {
-        if (result.rows.length) {
-          return res.json(result.rows[0]);
+        if (result.length) {
+          return res.json(result[0]);
         }
         res.json({ message: "no resources found" });
       })
       .catch((err) => res.status(400).json({ error: err.message }));
   });
+
   //-----------------------update user profile------------
-  router.post("/:id", (req, res) => {
+  router.put("/:id", (req, res) => {
     queryParams = [
       req.body.first_name || "",
       req.body.last_name || "",
