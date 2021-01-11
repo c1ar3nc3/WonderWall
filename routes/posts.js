@@ -5,7 +5,11 @@ const router  = express.Router();
 
 module.exports = (db) => {
 
-  // GET all posts to show all the posts
+/////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+____________________________GET___________________________________
+/////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+//---------------- GET all posts to show all the posts------------
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM posts;`)
       .then(data => {
@@ -19,7 +23,8 @@ module.exports = (db) => {
       });
   });
 
-  // GET post by 'id'
+//----------------- GET post by 'id'------------------------
+
   router.get("/:id", (req, res) => {
     db.query(`SELECT title FROM posts WHERE id = $1;`, [req.params.id])
       .then((result) => {
@@ -31,7 +36,8 @@ module.exports = (db) => {
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
-  // GET post by 'title'
+//----------------- GET post by 'title'------------------------
+
   router.get("/search/:title", (req, res) => {
     db.query(`SELECT * FROM posts WHERE title iLIKE $1;`, [`%${req.params.title}%`])
       .then((result) => {
@@ -43,19 +49,25 @@ module.exports = (db) => {
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
-  // // GET all post by 'owner_id'
-  // router.get("/:owner_id", (req, res) => {
-  //   db.query(`SELECT title FROM posts WHERE owner_id = $1;`, [req.params.owner_id])
-  //     .then((result) => {
-  //       if (result.rows.length) {
-  //         return res.json(result.rows[0]);
-  //       }
-  //       res.json({ message: "no resources found" });
-  //     })
-  //     .catch((err) => res.status(400).json({ error: err.message }));
-  // });
+// //----------------- GET all post by 'owner_id'------------------
 
-  // POST post to create a new post
+//   router.get("/:owner_id", (req, res) => {
+//     db.query(`SELECT title FROM posts WHERE owner_id = $1;`, [req.params.owner_id])
+//       .then((result) => {
+//         if (result.rows.length) {
+//           return res.json(result.rows[0]);
+//         }
+//         res.json({ message: "no resources found" });
+//       })
+//       .catch((err) => res.status(400).json({ error: err.message }));
+//   });
+
+
+/////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+_______________________________POST___________________________________
+/////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+//------------------- POST to create a new post------------------\\
   router.post("/", (req, res) => {
     queryParams = [
       req.body.title,
