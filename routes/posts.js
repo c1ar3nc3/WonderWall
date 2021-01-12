@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { getCategoryByName } = require("../helpers/new_post_helper");
 
 module.exports = (db) => {
   /////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -19,17 +20,9 @@ module.exports = (db) => {
       });
   });
 
-  //----------------- GET post by 'id'------------------------
-
-  router.get("/:id", (req, res) => {
-    db.query(`SELECT title FROM posts WHERE id = $1;`, [req.params.id])
-      .then((result) => {
-        if (result.rows.length) {
-          return res.json(result.rows[0]);
-        }
-        res.json({ message: "no resources found" });
-      })
-      .catch((err) => res.status(400).json({ error: err.message }));
+  //----------------- GET new_post by ------------------------
+  router.get("/new_post", (req, res) => {
+    res.render("new_post");
   });
 
   //----------------- GET post by 'title'------------------------
@@ -62,26 +55,48 @@ module.exports = (db) => {
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
+  //----------------- GET post by 'id'------------------------
+
+  router.get("/:id", (req, res) => {
+    db.query(`SELECT title FROM posts WHERE id = $1;`, [req.params.id])
+      .then((result) => {
+        if (result.rows.length) {
+          return res.json(result.rows[0]);
+        }
+        res.json({ message: "no resources found" });
+      })
+      .catch((err) => res.status(400).json({ error: err.message }));
+  });
+
   /////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   //_____________________________POST___________________________________\\
   /////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   //------------------- POST to create a new post------------------\\
-  router.post("/", (req, res) => {
+  router.post("/new_post/create", (req, res) => {
+    const categoryId = getCategoryByName(req.body.category_id).then(
+      (result) => {
+        const id = result;
+        return id;
+      }
+    );
     queryParams = [
       req.body.title,
       req.body.post_description,
       req.body.url_address,
       req.body.image_url,
-      req.body.category_id,
+      categoryId,
+      req.session.user_id,
     ];
+    console.log("QUERY :", queryParams);
     db.query(
-      `INSERT INTO posts (title, post_description, url_address, image_url, category_id) VALUES (
+      `INSERT INTO posts (title, post_description, url_address, image_url, category_id, owner_id) VALUES (
       $1,
       $2,
       $3,
       $4,
-      $5
+      $5,
+      $6
       )
       RETURNING *;`,
       queryParams
