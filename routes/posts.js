@@ -27,13 +27,15 @@ module.exports = (db) => {
 
   //----------------- GET post by 'title'------------------------
 
-  router.get("/search/:title", (req, res) => {
+  router.post("/search", (req, res) => {
     db.query(`SELECT * FROM posts WHERE title iLIKE $1;`, [
-      `%${req.params.title}%`,
+      `%${req.body.title}%`,
     ])
       .then((result) => {
         if (result.rows.length) {
-          return res.json(result.rows);
+          const allPosts = result.rows;
+          const templateVars = { posts: allPosts };
+          res.render("search", templateVars);
         }
         res.json({ message: "no resources found" });
       })
@@ -74,34 +76,33 @@ module.exports = (db) => {
 
   //------------------- POST to create a new post------------------\\
   router.post("/new_post/create", (req, res) => {
-    const categoryId = getCategoryByName(req.body.category_id).then(
-      (result) => {
-        const id = result;
-        return id;
-      }
-    );
-    queryParams = [
-      req.body.title,
-      req.body.post_description,
-      req.body.url_address,
-      req.body.image_url,
-      categoryId,
-      req.session.user_id,
-    ];
-    console.log("QUERY :", queryParams);
-    db.query(
-      `INSERT INTO posts (title, post_description, url_address, image_url, category_id, owner_id) VALUES (
-      $1,
-      $2,
-      $3,
-      $4,
-      $5,
-      $6
-      )
-      RETURNING *;`,
-      queryParams
-    )
-      .then((res) => console.log(res.rows))
+    const categoryId = getCategoryByName(req.body.category_id)
+      .then((result) => {
+        return result;
+      })
+      .then((id) => {
+        queryParams = [
+          req.body.title,
+          req.body.post_description,
+          req.body.url_address,
+          req.body.image_url,
+          id,
+          req.session.user_id,
+        ];
+        db.query(
+          `INSERT INTO posts (title, post_description, url_address, image_url, category_id, owner_id) VALUES (
+        $1,
+        $2,
+        $3,
+        $4,
+        $5,
+        $6
+        )
+        RETURNING *;`,
+          queryParams
+        );
+      })
+      .then((result) => res.redirect("/"))
       .catch((err) => console.error(err.stack));
   });
 
