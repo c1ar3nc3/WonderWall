@@ -9,8 +9,9 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM post_categories;`)
       .then((data) => {
-        const category = data.rows;
-        res.json({ category });
+        const categories = data.rows;
+        const templateVars = { categories };
+        res.render("index", templateVars);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
