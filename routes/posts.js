@@ -79,10 +79,11 @@ module.exports = (db) => {
     db.query(`SELECT *, post_categories.category as category
     FROM posts
     JOIN post_categories ON post_categories.id = posts.category_id
-    WHERE category iLIKE $1;`, [`%${req.body.category}%`])
+    WHERE category iLIKE $1;`, [`%${req.params.category}%`])
       .then((data) => {
         const sortedPosts = data.rows;
         const templateVars = {posts: sortedPosts};
+        console.log(templateVars)
         res.render("index", templateVars);
       })
       .catch((err) => res.status(400).json({ error: err.message }));
