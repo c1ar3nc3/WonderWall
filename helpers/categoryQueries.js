@@ -1,10 +1,20 @@
 const { db } = require("../server.js");
 
 //Categories
+//-------Get all categories-------
+const getAllCategories = () => {
+  const queryString =`SELECT category FROM post_categories;`;
+  return db
+  .query(queryString)
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+};
 
-
-
-
+//-------Get all categories by Post_id------
 const getCategoryByPost = (post_id) => {
   const queryString = `
   SELECT category
@@ -19,6 +29,7 @@ const getCategoryByPost = (post_id) => {
     .catch((err) => console.error(err.stack));
 };
 
+//-----Get all categories by category name------
 const getCategoryByName = (category) => {
   const queryString = `
   SELECT category
