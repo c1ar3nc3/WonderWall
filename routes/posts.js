@@ -9,10 +9,13 @@ module.exports = (db) => {
 
   //---------------- GET all posts to show all the posts------------
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM posts;`)
+    db.query(`
+    SELECT *, post_categories.category as category
+    FROM posts
+    JOIN post_categories ON post_categories.id = category_id;`)
       .then((data) => {
         const allPosts = data.rows;
-        const templateVars = { posts: allPosts };
+        const templateVars = {posts: allPosts};
         res.render("index", templateVars);
       })
       .catch((err) => {
@@ -67,6 +70,23 @@ module.exports = (db) => {
       })
       .catch((err) => res.status(400).json({ error: err.message }));
   });
+
+  //----------------- GET all posts by catagory ------------------------
+
+  router.get("/sort/:category", (req, res) => {
+    db.query(`SELECT *, post_categories.category as category
+    FROM posts
+    JOIN post_categories ON post_categories.id = posts.category_id
+    WHERE category_id iLIKE $1;`,
+    [`%${req.params.category}%`])
+      .then((data) => {
+        const allPosts = data.rows;
+        const templateVars = {posts: allPosts};
+        res.render("index", templateVars);
+      })
+      .catch((err) => res.status(400).json({ error: err.message }));
+  });
+
 
   /////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   //_____________________________POST___________________________________\\
