@@ -27,13 +27,15 @@ module.exports = (db) => {
 
   //----------------- GET post by 'title'------------------------
 
-  router.get("/search/:title", (req, res) => {
+  router.post("/search", (req, res) => {
     db.query(`SELECT * FROM posts WHERE title iLIKE $1;`, [
-      `%${req.params.title}%`,
+      `%${req.body.title}%`,
     ])
       .then((result) => {
         if (result.rows.length) {
-          return res.json(result.rows);
+          const allPosts = result.rows;
+          const templateVars = { posts: allPosts };
+          res.render("search", templateVars);
         }
         res.json({ message: "no resources found" });
       })
@@ -85,7 +87,7 @@ module.exports = (db) => {
           req.body.url_address,
           req.body.image_url,
           id,
-          1,
+          req.session.user_id,
         ];
         db.query(
           `INSERT INTO posts (title, post_description, url_address, image_url, category_id, owner_id) VALUES (
