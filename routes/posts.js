@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { getCategoryByName } = require("../helpers/new_post_helper");
+const { getUserById } = require("../helpers/userDatabaseQueries");
 
 module.exports = (db) => {
   /////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -11,8 +12,9 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM posts;`)
       .then((data) => {
+        const user = req.session.user_id;
         const allPosts = data.rows;
-        const templateVars = { posts: allPosts };
+        const templateVars = { posts: allPosts, user };
         res.render("index", templateVars);
       })
       .catch((err) => {
