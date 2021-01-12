@@ -6,42 +6,12 @@
     <%- include("./partials/navbar") %>
       <!-- Page Content -->
       <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">My Resources</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="new_post">New Post</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Logout</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      </nav>
-
-      <!-- Page Content -->
-      <div class="container">
         <div class="row">
           <div class="col-lg-3">
             <h1 class="my-4">Explore...</h1>
             <% for (let category of posts) { %>
               <div class="list-group">
-                <a href="#" class="list-group-item">
+                <a href="#" class="btn btn-secondary m-1 ">
                   <%= category.category %>
                 </a>
               </div>
@@ -94,6 +64,7 @@
       <scri pt src="vendor/jquery/jquery.min.js">
         </script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
   </body>
 
 </html>
