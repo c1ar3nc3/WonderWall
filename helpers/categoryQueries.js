@@ -49,5 +49,6 @@ const getCategoryByName = (category) => {
 
 module.exports = {
   getCategoryByPost,
-  getCategoryByName
+  getCategoryByName,
+  getAllCategories
 }
