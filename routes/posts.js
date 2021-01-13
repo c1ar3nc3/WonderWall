@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { getCategoryByName } = require("../helpers/new_post_helper");
 const { getUserById } = require("../helpers/userDatabaseQueries");
+const { getPostDetailsById } = require("../helpers/postDatabaseQueries");
 
 module.exports = (db) => {
   /////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -10,10 +11,12 @@ module.exports = (db) => {
 
   //---------------- GET all posts to show all the posts------------
   router.get("/", (req, res) => {
-    db.query(`
+    db.query(
+      `
     SELECT *, post_categories.category as category
     FROM posts
-    JOIN post_categories ON post_categories.id = category_id;`)
+    JOIN post_categories ON post_categories.id = category_id;`
+    )
       .then((data) => {
         const user = req.session.user_id;
         const allPosts = data.rows;
@@ -27,7 +30,9 @@ module.exports = (db) => {
 
   //----------------- GET new_post by ------------------------
   router.get("/new_post", (req, res) => {
-    res.render("new_post");
+    const user = req.session.user_id;
+    const templateVars = { user };
+    res.render("new_post", templateVars);
   });
 
   //----------------- GET post by 'title'------------------------
@@ -37,9 +42,11 @@ module.exports = (db) => {
       `%${req.body.title}%`,
     ])
       .then((result) => {
+        console.log();
         if (result.rows.length) {
+          const user = req.session.user_id;
           const allPosts = result.rows;
-          const templateVars = { posts: allPosts };
+          const templateVars = { posts: allPosts, user };
           res.render("search", templateVars);
         }
         res.json({ message: "no resources found" });
@@ -62,13 +69,16 @@ module.exports = (db) => {
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
-  //----------------- GET post by 'id'------------------------
+  //----------------- GET post details by 'id'------------------------
 
-  router.get("/:id", (req, res) => {
-    db.query(`SELECT title FROM posts WHERE id = $1;`, [req.params.id])
+  router.get("/post_details/:id", (req, res) => {
+    getPostDetailsById(req.params.id)
       .then((result) => {
-        if (result.rows.length) {
-          return res.json(result.rows[0]);
+        if (result.length) {
+          const user = req.session.user_id;
+          const post_details = result[0];
+          const templateVars = { post_details, user };
+          return res.render("post_details", templateVars);
         }
         res.json({ message: "no resources found" });
       })
@@ -78,19 +88,21 @@ module.exports = (db) => {
   //----------------- GET all posts by catagory ------------------------
 
   router.get("/sort/:category", (req, res) => {
-    db.query(`SELECT *, post_categories.category as category
+    db.query(
+      `SELECT *, post_categories.category as category
     FROM posts
     JOIN post_categories ON post_categories.id = posts.category_id
-    WHERE category iLIKE $1;`, [`%${req.params.category}%`])
+    WHERE category iLIKE $1;`,
+      [`%${req.params.category}%`]
+    )
       .then((data) => {
         const sortedPosts = data.rows;
-        const templateVars = {posts: sortedPosts};
-        console.log(templateVars)
+        const templateVars = { posts: sortedPosts };
+        console.log(templateVars);
         res.render("index", templateVars);
       })
       .catch((err) => res.status(400).json({ error: err.message }));
   });
-
 
   /////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
   //_____________________________POST___________________________________\\

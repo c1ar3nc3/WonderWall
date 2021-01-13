@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+  <%- include("./partials/head") %>
+
+
+<body>
+  <%- include("./partials/navbar") %>
+    <!-- Page Content -->
+    <main class="container">
+      <div class="row">
+        <h2 class="col-12">
+          <%= post_details.title %>
+        </h2>
+
+      </div>
+      <div class="card">
+
+        <div class="col-md-8 resource-field">
+          <img src="<%= post_details.image_url%>" width="500" height="600">
+          <br><br>
+          <p>
+            <%= post_details.post_description %>
+          </p>
+          <a href="<%= post_details.url_address %>">
+            <%= post_details.url_address %>
+          </a>
+          <br>
+          <strong>
+            Created at: <%= post_details.date_created %>
+          </strong>
+        </div>
+      </div>
+    </main>
+
+</body>
+
+</html>

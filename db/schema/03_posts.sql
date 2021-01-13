@@ -9,8 +9,10 @@ CREATE TABLE posts
   title VARCHAR(255) NOT NULL,
   post_description TEXT,
   url_address VARCHAR(255),
-  date_created TIMESTAMP DEFAULT NOW(),
-  image_url VARCHAR(255) DEFAULT 'https://i.pinimg.com/564x/3a/92/6b/3a926bda762ba2024d76713182d316bc.jpg',
+  date_created DATE DEFAULT NOW()
+  ::date,
+  image_url VARCHAR
+  (255) DEFAULT 'https://i.pinimg.com/564x/3a/92/6b/3a926bda762ba2024d76713182d316bc.jpg',
   category_id INTEGER REFERENCES post_categories
   (id) ON
   DELETE CASCADE

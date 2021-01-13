@@ -7,101 +7,74 @@
 
     <main style="margin: 1em;">
 
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-          <a class="navbar-brand" href="#">WonderWall</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="/">Home
-                  <span class="sr-only">(current)</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">My Resources</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="new_post">New Post</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Logout</a>
-              </li>
-            </ul>
+      <%- include("./partials/navbar") %>
+
+        <h1>Add Post ...</h1>
+
+        <form class="form-horizontal" action="/new_post/create" method="POST">
+
+          <div class="form-group">
+            <label for="title">Name of the title</label>
+            <input name="title" type="text" class="form-control" id="title" placeholder="Title">
           </div>
-        </div>
-      </nav>
-
-      <h1>Add Post ...</h1>
-
-      <form class="form-horizontal" action="/new_post/create" method="POST">
-
-        <div class="form-group">
-          <label for="title">Name of the title</label>
-          <input name="title" type="text" class="form-control" id="title" placeholder="Title">
-        </div>
-        <div class="form-group">
-          <label for="url_address">URL</label>
-          <input name="url_address" type="text" class="form-control" id="title" placeholder="https//:some.post.com">
-        </div>
-        <div class="form-group">
-          <label for="image_url">Image address for your post</label>
-          <input name="image_url" type="text" class="form-control" id="title" placeholder="https//:url_for_the_picture">
-        </div>
-
-        <div class="form-group">
-          <label class="control-label" for="category_id">Select category</label>
-          <div class="controls">
-            <select name="category_id" class="form-control">
-              <option>Technology</option>
-              <option>Leisure</option>
-              <option>Sports</option>
-              <option>Lifestyle</option>
-              <option>Music</option>
-              <option>Video Game</option>
-              <option>Travel</option>
-              <option>Politics</option>
-              <option>Computer Science</option>
-              <option>Networking</option>
-              <option>Dating</option>
-              <option>How-To</option>
-              <option>Space</option>
-              <option>Cryptocurrency</option>
-              <option>Cooking</option>
-            </select>
+          <div class="form-group">
+            <label for="url_address">URL</label>
+            <input name="url_address" type="text" class="form-control" id="title" placeholder="https//:some.post.com">
           </div>
-        </div>
-
-        <div class="form-group">
-          <label class="control-label" for="post_description">Describe your post</label>
-          <div class="controls">
-            <textarea name="post_description" rows="3" class="form-control" placeholder="Post about..."></textarea>
+          <div class="form-group">
+            <label for="image_url">Image address for your post</label>
+            <input name="image_url" type="text" class="form-control" id="title"
+              placeholder="https//:url_for_the_picture">
           </div>
-        </div>
 
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <div class="form-group">
+            <label class="control-label" for="category_id">Select category</label>
+            <div class="controls">
+              <select name="category_id" class="form-control">
+                <option>Technology</option>
+                <option>Leisure</option>
+                <option>Sports</option>
+                <option>Lifestyle</option>
+                <option>Music</option>
+                <option>Video Game</option>
+                <option>Travel</option>
+                <option>Politics</option>
+                <option>Computer Science</option>
+                <option>Networking</option>
+                <option>Dating</option>
+                <option>How-To</option>
+                <option>Space</option>
+                <option>Cryptocurrency</option>
+                <option>Cooking</option>
+              </select>
+            </div>
+          </div>
 
-        </div>
+          <div class="form-group">
+            <label class="control-label" for="post_description">Describe your post</label>
+            <div class="controls">
+              <textarea name="post_description" rows="3" class="form-control" placeholder="Post about..."></textarea>
+            </div>
+          </div>
 
-      </form>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save changes</button>
 
-      <!-- Bootstrap JS -->
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+          </div>
+
+        </form>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
   </body>
 
 </html>
