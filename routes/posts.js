@@ -75,18 +75,17 @@ module.exports = (db) => {
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
-  //----------------- GET all posts by catagory ------------------------
-
-  router.get("/sort/:category", (req, res) => {
+  //----------------- GET all posts by catagory_id ------------------------
+  //
+  router.get("/sort/:category_id", (req, res) => {
     db.query(`SELECT *, post_categories.category as category
     FROM posts
     JOIN post_categories ON post_categories.id = posts.category_id
-    WHERE category iLIKE $1;`, [`%${req.params.category}%`])
+    WHERE category_id = $1;`, [req.params.category_id])
       .then((data) => {
         const sortedPosts = data.rows;
         const templateVars = {posts: sortedPosts};
-        console.log(templateVars)
-        res.render("index", templateVars);
+        return res.json(templateVars);
       })
       .catch((err) => res.status(400).json({ error: err.message }));
   });

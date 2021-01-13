@@ -11,11 +11,26 @@
             <h1 class="my-4">Explore...</h1>
             <% for (let category of posts) { %>
               <div class="list-group">
-                <a href="#" class="btn btn-secondary m-1 ">
+                <button type = "button" class="btn btn-secondary m-1" data-value="<%=category.id%>">
                   <%= category.category %>
-                </a>
+                </button>
               </div>
               <% } %>
+              <script>
+                $(document).ready(() => {
+                  $( "button" ).click(function(e) {
+                    let $target = $(e.target);
+                    let categoryId = $target.data("value");
+                  $.ajax({
+                    method: "GET",
+                    url: `/sort/${categoryId}`
+                  }).done((category) => {
+                    console.log(category);
+                    // $(".row").text(category).appendTo($(".row"));
+                  });;
+                  })
+                });
+              </script>
           </div>
           <!-- /.col-lg-3 -->
 
@@ -61,9 +76,9 @@
       </footer>
 
       <!-- Bootstrap core JavaScript -->
-      <scri pt src="vendor/jquery/jquery.min.js">
-        </script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="vendor/jquery/jquery.min.js"></script>
+      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- <script src="../public/scripts/app.js"></script> -->
 
   </body>
 

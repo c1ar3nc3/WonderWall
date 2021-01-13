@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 $(() => {
   $.ajax({
     method: "GET",
@@ -7,4 +9,20 @@ $(() => {
       $("<div>").text(user.name).appendTo($("body"));
     }
   });;
+});
+
+
+//---------Refresh Cards DIV with new params------------
+$(document).ready(() => {
+  $( "button" ).click(function(e) {
+    let $target = $(e.target);
+    let categoryId = $target.data("value");
+  $.ajax({
+    method: "GET",
+    url: `/sort/${categoryId}`
+  }).done((category) => {
+    console.log(category);
+    // $(".row").text(category).appendTo($(".row"));
+  });;
+  })
 });
