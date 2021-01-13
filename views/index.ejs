@@ -11,33 +11,11 @@
             <h1 class="my-4">Explore...</h1>
             <% for (let category of posts) { %>
               <div class="list-group">
-<<<<<<< HEAD
                 <a href="/sort/<%=category.id%>/"><button type = "button" class="btn btn-secondary m-1">
-=======
-                <button type="button" class="btn btn-secondary m-1" data-value="<%=category.id%>">
->>>>>>> origin
                   <%= category.category %>
                 </button></a>
               </div>
               <% } %>
-<<<<<<< HEAD
-=======
-                <script>
-                  $(document).ready(() => {
-                    $("button").click(function (e) {
-                      let $target = $(e.target);
-                      let categoryId = $target.data("value");
-                      $.ajax({
-                        method: "GET",
-                        url: `/sort/${categoryId}`
-                      }).done((category) => {
-                        console.log(category);
-                        // $(".row").text(category).appendTo($(".row"));
-                      });;
-                    })
-                  });
-                </script>
->>>>>>> origin
           </div>
           <!-- /.col-lg-3 -->
 

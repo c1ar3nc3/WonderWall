@@ -6,16 +6,7 @@
     <%- include("./partials/navbar") %>
 
       <!-- Page Content -->
-          <div class="col-lg-3">
-            <h1 class="my-4">Explore...</h1>
-            <% for (let category of posts) { %>
-              <div class="list-group">
-                <a href="/sort/<%=category.id%>/"><button type = "button" class="btn btn-secondary m-1">
-                  <%= category.category %>
-                </button></a>
-              </div>
-              <% } %>
-          </div>
+
           <!-- /.col-lg-3 -->
 
           <div class="col-lg-9">
