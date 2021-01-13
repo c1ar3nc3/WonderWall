@@ -44,9 +44,7 @@ module.exports = (db) => {
         } else{
           const templateVars = { posts: [] };
           res.render("search", templateVars);
-          // res.json()
         }
-        // res.json({ message: "no resources found" });
       })
       .catch((err) => res.status(400).json({ error: err.message }));
   });
@@ -54,14 +52,13 @@ module.exports = (db) => {
   //----------------- GET all posts for logged in user------------------
 
   router.get("/my_resources", (req, res) => {
-    console.log("Hello");
-
-    db.query(`SELECT * FROM posts WHERE owner_id = 14 UNION SELECT posts.* FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE user_id = 14;`)
+    db.query(`SELECT * FROM posts WHERE owner_id = $1 UNION SELECT posts.* FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE user_id = $1;`, [req.session.user_id])
       .then((result) => {
-        console.log(result.rows);
+        console.log(result);
+        const user = req.session.user_id;
         const MyPosts = result.rows;
-        const templateVars = { posts: MyPosts };
-        res.render("index", templateVars);
+        const templateVars = { posts: MyPosts, user };
+        res.render("my_resources", templateVars);
       })
       .catch((err) => res.status(400).json({ error: err.message }));
   });
