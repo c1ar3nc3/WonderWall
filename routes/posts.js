@@ -100,9 +100,10 @@ module.exports = (db) => {
       [req.params.category_id]
     )
       .then((data) => {
+        const user = req.session.user_id;
         const sortedPosts = data.rows;
-        const templateVars = { posts: sortedPosts };
-        return res.json(templateVars);
+        const templateVars = {posts: sortedPosts, user};
+        return res.render("category", templateVars);
       })
       .catch((err) => res.status(400).json({ error: err.message }));
   });
