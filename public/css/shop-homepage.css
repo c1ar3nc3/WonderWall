@@ -1,3 +1,84 @@
+/* Background of the whole page */
 body {
   padding: 5em;
+  background-color: #F7E1D3;
+background-image: url("https://www.transparenttextures.com/patterns/notebook.png");
+margin: 0;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+
+}
+
+/* navbar whole line color should include !important after color */
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top {
+  background-color: #F5D2D3!important;
+}
+
+/*Name text  */
+.navbar-dark .navbar-brand {
+  color: rgb(179, 50, 50);
+}
+
+/*Text My resources, profile, newPost, logout  */
+.navbar-dark .navbar-nav .nav-link {
+  color: rgb(180, 39, 39);
+}
+
+/*Text HOME  */
+.navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show>.nav-link {
+  color: rgb(156, 25, 25);
+}
+
+/* btn save changes from new post page */
+.btn-primary {
+  color: rgb(14, 13, 13);
+  background-color: #F9C7BE;
+}
+/* btn save changes HOVER from new post page */
+.btn-primary:hover {
+  color: rgb(19, 18, 18);
+  background-color: #ebcabb;
+}
+/* btns categories */
+.btn-secondary {
+  color: rgb(14, 13, 13);
+  background-color: #F9C7BE;
+}
+/* btns categories HOVER */
+.btn-secondary:hover {
+  color: rgb(19, 18, 18);
+  background-color: #F9C7BE;
+}
+/* input color */
+.form-control {
+  background-color: #ebbcbe;
+}
+/* FOOTER */
+footer.py-5.bg-dark {
+background-color: navajowhite!important;
+}
+
+/*POST CARDS */
+.card {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #F7E1D3;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+}
+
+/* Links inside post cards */
+a {
+  color: #8c96a1;
+  text-decoration: none;
+  background-color: transparent;
 }

@@ -11,7 +11,7 @@ const getCategoryByName = (name) => {
     .query(queryString, [name])
     .then((result) => {
       if (result.rows.length) {
-        return result.rows.id;
+        return result.rows[0].id;
       }
       result.json({ message: "no resources found" });
     })

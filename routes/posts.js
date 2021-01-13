@@ -13,7 +13,7 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     db.query(
       `
-    SELECT *, post_categories.category as category
+    SELECT posts.*, post_categories.category as category
     FROM posts
     JOIN post_categories ON post_categories.id = category_id;`
     )
@@ -48,7 +48,7 @@ module.exports = (db) => {
           const allPosts = result.rows;
           const templateVars = { posts: allPosts, user };
           res.render("search", templateVars);
-        } else{
+        } else {
           const templateVars = { posts: [] };
           res.render("search", templateVars);
         }
@@ -59,7 +59,10 @@ module.exports = (db) => {
   //----------------- GET all posts for logged in user------------------
 
   router.get("/my_resources", (req, res) => {
-    db.query(`SELECT * FROM posts WHERE owner_id = $1 UNION SELECT posts.* FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE user_id = $1;`, [req.session.user_id])
+    db.query(
+      `SELECT * FROM posts WHERE owner_id = $1 UNION SELECT posts.* FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE user_id = $1;`,
+      [req.session.user_id]
+    )
       .then((result) => {
         console.log(result);
         const user = req.session.user_id;
@@ -89,10 +92,13 @@ module.exports = (db) => {
   //----------------- GET all posts by catagory_id ------------------------
   //
   router.get("/sort/:category_id", (req, res) => {
-    db.query(`SELECT *, post_categories.category as category
+    db.query(
+      `SELECT *, post_categories.category as category
     FROM posts
     JOIN post_categories ON post_categories.id = posts.category_id
-    WHERE category_id = $1;`, [req.params.category_id])
+    WHERE category_id = $1;`,
+      [req.params.category_id]
+    )
       .then((data) => {
         const user = req.session.user_id;
         const sortedPosts = data.rows;
@@ -108,7 +114,7 @@ module.exports = (db) => {
 
   //------------------- POST to create a new post------------------\\
   router.post("/new_post/create", (req, res) => {
-    const categoryId = getCategoryByName(req.body.category_id)
+    getCategoryByName(req.body.category_id)
       .then((result) => {
         return result;
       })

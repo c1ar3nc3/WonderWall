@@ -6,7 +6,7 @@ const { db } = require("../server.js");
  * @return {Promise<{}>} A promise to the user.
  */
 const getPostDetailsById = (id) => {
-  const queryString = `SELECT DISTINCT posts.*, user_feedbacks.* FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE posts.id = $1`;
+  const queryString = `SELECT DISTINCT posts.*, user_feedbacks.* FROM posts LEFT JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE posts.id = $1`;
   return db
     .query(queryString, [id])
     .then((result) => {

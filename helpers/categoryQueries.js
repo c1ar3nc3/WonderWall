@@ -3,9 +3,9 @@ const { db } = require("../server.js");
 //Categories
 //-------Get all categories-------
 const getAllCategories = () => {
-  const queryString =`SELECT category FROM post_categories;`;
+  const queryString = `SELECT category FROM post_categories;`;
   return db
-  .query(queryString)
+    .query(queryString)
     .then((result) => {
       return result.rows;
     })
@@ -34,7 +34,7 @@ const getCategoryByName = (category) => {
   const queryString = `
   SELECT category
   FROM post_categories
-  WHERE category iLike $1;`
+  WHERE category iLike $1;`;
   return db
     .query(queryString, [`%${category}%`])
     .then((result) => {
@@ -46,9 +46,8 @@ const getCategoryByName = (category) => {
     .catch((err) => console.error(err.stack));
 };
 
-
 module.exports = {
   getCategoryByPost,
   getCategoryByName,
-  getAllCategories
-}
+  getAllCategories,
+};
