@@ -25,7 +25,7 @@ module.exports = (db) => {
       });
   });
 
-  //----------------- GET new_post by ------------------------
+  //----------------- GET new_post------------------------
   router.get("/new_post", (req, res) => {
     res.render("new_post");
   });
@@ -41,23 +41,27 @@ module.exports = (db) => {
           const allPosts = result.rows;
           const templateVars = { posts: allPosts };
           res.render("search", templateVars);
+        } else{
+          const templateVars = { posts: [] };
+          res.render("search", templateVars);
+          // res.json()
         }
-        res.json({ message: "no resources found" });
+        // res.json({ message: "no resources found" });
       })
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
-  //----------------- GET all post by 'owner_id'------------------
+  //----------------- GET all posts for logged in user------------------
 
-  router.get("/my_page/:owner_id", (req, res) => {
-    db.query(`SELECT title, post_description FROM posts WHERE owner_id = $1;`, [
-      req.params.owner_id,
-    ])
+  router.get("/my_resources", (req, res) => {
+    console.log("Hello");
+
+    db.query(`SELECT * FROM posts WHERE owner_id = 14 UNION SELECT posts.* FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE user_id = 14;`)
       .then((result) => {
-        if (result.rows.length) {
-          return res.json(result.rows[0]);
-        }
-        res.json({ message: "no resources found" });
+        console.log(result.rows);
+        const MyPosts = result.rows;
+        const templateVars = { posts: MyPosts };
+        res.render("index", templateVars);
       })
       .catch((err) => res.status(400).json({ error: err.message }));
   });
