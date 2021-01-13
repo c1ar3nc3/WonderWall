@@ -17,14 +17,19 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top {
   background-color: #F5D2D3!important;
 }
 
+/*Name text  */
+.navbar-dark .navbar-brand {
+  color: rgb(179, 50, 50);
+}
+
 /*Text My resources, profile, newPost, logout  */
-.navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show>.nav-link {
+.navbar-dark .navbar-nav .nav-link {
   color: rgb(180, 39, 39);
 }
 
 /*Text HOME  */
-.navbar-dark .navbar-nav .nav-link {
-  color: rgba(190, 49, 49, 0.5);
+.navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show>.nav-link {
+  color: rgb(156, 25, 25);
 }
 
 /* btn save changes from new post page */
