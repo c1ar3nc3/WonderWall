@@ -22,13 +22,13 @@ module.exports = (db) => {
       });
   });
 
-  //-----------------------get user by id---------------
-  router.get("/:id", (req, res) => {
+  //-----------------------get user profile by id---------------
+  router.get("/profile/:id", (req, res) => {
     getUserById(req.params.id)
       .then((result) => {
         if (result.length) {
           const templateVars = { user: result[0] };
-          return res.render("user_profile", templateVars);
+          res.render("user_profile", templateVars);
         }
         res.json({ message: "no resources found" });
       })

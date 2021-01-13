@@ -24,25 +24,26 @@
             <span class="sr-only">(current)</span>
           </a>
         </li>
-        <% if (user) { %>
+
+        <% if (!user) { %>
           <li class="nav-item">
-            <a class="nav-link" href="my_resources">My Resources</a>
+            <a class="nav-link" href="/login">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="new_post">New Post</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/login/logout">Logout</a>
+            <a class="nav-link" href="/register">Sign Up</a>
           </li>
           <% } else { %>
             <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
+              <a class="nav-link" href="my_resources">My Resources</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/register">Sign Up</a>
+              <a class="nav-link" href="/api/users/profile/<%= user %>">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="new_post">New Post</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login/logout">Logout</a>
             </li>
             <% } %>
       </ul>
