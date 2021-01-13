@@ -21,7 +21,12 @@ $(document).ready(() => {
     method: "GET",
     url: `/sort/${categoryId}`
   }).done((category) => {
-    console.log(category);
+    $.ajax({
+      method: "POST",
+      url: "/new_post/create"
+    }).done((posts) => {
+      $(".row").load(window.location + " .row");
+    })
     // $(".row").text(category).appendTo($(".row"));
   });;
   })
