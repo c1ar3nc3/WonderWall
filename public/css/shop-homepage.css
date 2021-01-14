@@ -188,3 +188,8 @@ a:hover {
   color: #2e3031;
   text-decoration: underline;
 }
+
+/* RATING STARS */
+.checked {
+  color: orange;
+}
