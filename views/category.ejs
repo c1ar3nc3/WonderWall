@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <%- include("./partials/head") %>
+<%- include("./partials/head") %>
 
-<body>
-  <%- include("./partials/navbar") %>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-3">
-        <h1 class="my-4">Explore...</h1>
-        <% for (let category of categories) { %>
-          <div class="list-group">
-            <a class="btn btn-info m-2" href="/sort/<%=category.id%>/">
-                  <!-- <button type = "button" class="btn btn-secondary m-1"> -->
+  <body>
+    <%- include("./partials/navbar") %>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">
+            <h1 class="my-4">Explore...</h1>
+            <% for (let category of categories) { %>
+              <div class="list-group">
+                <a class="btn btn-info m-2" href="/sort/<%=category.id%>/">
                   <%= category.category %>
-                <!-- </button> -->
-              </a>
+                </a>
+              </div>
+              <% } %>
           </div>
-          <% } %>
-      </div>
-  <%- include("./partials/posts") %>
+          <%- include("./partials/posts") %>
 
 
-  <scri pt src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-</body>
+            <scri pt src="vendor/jquery/jquery.min.js">
+              </script>
+              <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+
 </html>

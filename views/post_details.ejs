@@ -9,16 +9,14 @@
     <%- include("./partials/navbar") %>
       <!-- Page Content -->
       <main class="container">
-        <div class="row">
-          <h2 class="col-12">
+        <div class="col-12">
+          <h2 class="col-6">
             <%= post_details.title %>
           </h2>
-
         </div>
         <div class="card">
-          <div class="col-md-12 resource-field">
+          <div class="col-md-12">
             <img src="<%= post_details.image_url%>" width="500" height="600">
-            <br><br>
             <p>
               <%= post_details.post_description %>
             </p>
@@ -31,11 +29,19 @@
             </strong>
           </div>
         </div>
+        <form action="/post_details/<%= post_details.post_id %>/comment" method="POST">
+          <div class="bg-light p-2">
+            <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
+                src="<%= user.profile_picture %> " width="40"><textarea name="comment_text"
+                class="form-control ml-1 shadow-none textarea"></textarea></div>
+            <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none" type="submit">Post
+                comment</button></div>
+          </div>
+        </form>
       </main>
 
 
       <section class="resource-and-reviews">
-
         <div id="resource-section">
           <% if (user) { %>
             <div id="review-section">
@@ -49,8 +55,6 @@
                     <% } %>
               </div>
               <form method="POST" , action="/......./<%= user.id %>/reviews" id="review-contents">
-                <textarea name="comment" class="review-component" id="reivew-comment"
-                  placeholder="leave your review"></textarea>
                 <select name="rating" id="myselect">
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -60,7 +64,6 @@
                 </select>
                 <button class="review-component" id="submit-review" type="submit"><span></span>submit</span></button>
               </form>
-              <% } %>
             </div>
             <div>
               <span class="fa fa-star checked"></span>
@@ -71,6 +74,34 @@
             </div>
         </div>
       </section>
+
+      <% for( let comment of comments ) { %>
+
+        <div class="container mt-5">
+          <div class="d-flex justify-content-center row">
+            <div class="col-md-8">
+              <div class="d-flex flex-column comment-section">
+                <div class="bg-white p-2">
+                  <div class="d-flex flex-row user-info"><img class="rounded-circle"
+                      src="<%= comment.profile_picture %> " width="40">
+                    <div class="d-flex flex-column justify-content-start ml-2"><span
+                        class="d-block font-weight-bold name">
+                        <%= comment.name %>
+                      </span></div>
+                  </div>
+                  <div class="mt-2">
+                    <p class="comment-text">
+                      <%= comment.comment %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } %>
+
+          <% } %>
 
   </body>
 

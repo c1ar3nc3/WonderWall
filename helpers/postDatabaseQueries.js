@@ -1,12 +1,10 @@
 const { db } = require("../server.js");
-/// Posts
+/// Posts Details By ID
 /**
- * Get a single user from the database given their email.
- * @param {String} id The email of the user.
  * @return {Promise<{}>} A promise to the user.
  */
 const getPostDetailsById = (id) => {
-  const queryString = `SELECT DISTINCT posts.*, user_feedbacks.* FROM posts LEFT JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE post_id = $1 ORDER BY user_feedbacks.id`;
+  const queryString = `SELECT DISTINCT posts.*, user_feedbacks.* FROM posts LEFT JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE posts.id = $1 ORDER BY user_feedbacks.id`;
   return db
     .query(queryString, [id])
     .then((result) => {
@@ -15,14 +13,8 @@ const getPostDetailsById = (id) => {
     .catch((err) => console.error(err.stack));
 };
 
-module.exports = {
-  getPostDetailsById,
-};
-
-/// Like Or Unlike
+/// Like Or Unlike of a POST and a USER
 /**
- * Get a single user from the database given their email.
- * @param {String} user_id The email of the user.
  * @return {Promise<{}>} A promise to the user.
  */
 const likedPostByUser = (user_id, post_id) => {
@@ -37,8 +29,6 @@ const likedPostByUser = (user_id, post_id) => {
 
 /// Posts Owner
 /**
- * Get a single user from the database given their email.
- * @param {String} id The email of the user.
  * @return {Promise<{}>} A promise to the user.
  */
 const postsOwnById = (user_id) => {
@@ -53,8 +43,6 @@ const postsOwnById = (user_id) => {
 
 /// Liked Posts by ID
 /**
- * Get a single user from the database given their email.
- * @param {String} id The email of the user.
  * @return {Promise<{}>} A promise to the user.
  */
 const allLikedPostsByUser = (user_id) => {
@@ -67,9 +55,24 @@ const allLikedPostsByUser = (user_id) => {
     .catch((err) => console.error(err.stack));
 };
 
+/// All Comments for a post
+/**
+ * @return {Promise<{}>} A promise to the user.
+ */
+const postComments = (post_id) => {
+  const queryString = `SELECT DISTINCT users.name, users.profile_picture, user_feedbacks.* FROM user_feedbacks JOIN users ON user_feedbacks.user_id = users.id WHERE post_id = $1 AND comment IS NOT NULL ORDER BY user_feedbacks.id DESC;`;
+  return db
+    .query(queryString, [post_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => console.error(err.stack));
+};
+
 module.exports = {
   getPostDetailsById,
   likedPostByUser,
   postsOwnById,
   allLikedPostsByUser,
+  postComments,
 };
