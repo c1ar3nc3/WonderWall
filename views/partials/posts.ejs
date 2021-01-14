@@ -16,19 +16,8 @@
         </div>
         <div class="card-footer">
 
-          <!-- LIKES -->
-          <span><a class="like-Unlike" href="#">Like</a></span>
-          <script>
-            $(".like-Unlike").click(function (e) {
-              e.preventDefault()
-              if ($(this).html() == "Like") {
-                $(this).html('Unlike');
-              }
-              else {
-                $(this).html('Like');
-              }
-            });
-          </script>
+          <!-- RATES -->
+          <span>AVG: <%= post.average_rating %> </span>
         </div>
       </div>
     </div>

@@ -24,10 +24,12 @@ module.exports = (db) => {
 
   //-----------------------get user profile by id---------------
   router.get("/profile/:id", (req, res) => {
-    getUserById(req.params.id)
+    const userId = req.session.user_id;
+    getUserById(userId)
       .then((result) => {
-        if (result.length) {
-          const templateVars = { user: result[0] };
+        console.log(result);
+        if (result) {
+          const templateVars = { user_detail: result[0] };
           res.render("user_profile", templateVars);
         }
         res.json({ message: "no resources found" });

@@ -16,43 +16,43 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <% if (user) { %>
-            <img src="<%= user.name %>" alt="}=)" height="25" style="margin-top: 5px;">
-        <li class="nav-item">
-          <h6 class="nav-link" style="margin-bottom: 0px; padding-top: 12px;">
-            Welcome <%= user.first_name %>
-          </h6>
-        </li>
-        <% } %>
-          <a class="nav-link" href="/"><i class="fas fa-home"></i>
-            <span class="sr-only">(current)</span>
-          </a>
-          </li>
 
-          <% if (!user) { %>
+
+        <% if (!user_detail) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register"><i class="fas fa-user-plus"></i></a>
+          </li>
+          <% } else { %>
+            <li class="nav-item active">
+              <img class="rounded-circle" src="<%= user_detail.profile_picture %>" alt="}=)" height="25"
+                style="margin-top: 5px;">
             <li class="nav-item">
-              <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i></a>
+              <h6 class="nav-link" style="margin-bottom: 0px; padding-top: 12px;">
+                Welcome <%= user_detail.name %>
+              </h6>
+            </li>
+            <a class="nav-link" href="/"><i class="fas fa-home"></i>
+              <span class="sr-only">(current)</span>
+            </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/register"><i class="fas fa-user-plus"></i></a>
+              <a class="nav-link" href="my_resources"><i class="fas fa-book-reader"></i></a>
             </li>
-            <% } else { %>
-              <li class="nav-item">
-                <a class="nav-link" href="my_resources"><i class="fas fa-book-reader"></i></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/api/users/profile/<%= user %>" data-container="body" data-trigger="hover"
-                  data-toggle="popover" data-placement="bottom" data-content="Profile"><i
-                    class="fas fa-user-circle fa-lg"></i></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="new_post"><i class="fas fa-plus-circle"></i></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/login/logout"><i class="fas fa-sign-out-alt"></i></a>
-              </li>
-              <% } %>
+            <li class="nav-item">
+              <a class="nav-link" href="/api/users/profile/<%= user_detail.id %>" data-container="body"
+                data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Profile"><i
+                  class="fas fa-user-circle fa-lg"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="new_post"><i class="fas fa-plus-circle"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login/logout"><i class="fas fa-sign-out-alt"></i></a>
+            </li>
+            <% } %>
       </ul>
     </div>
   </div>

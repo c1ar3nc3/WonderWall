@@ -17,7 +17,6 @@ module.exports = (db) => {
 
   //------------------------logout-------------------------
   router.get("/logout", (req, res) => {
-    console.log("req.session:", req.session);
     req.session = null;
     res.redirect("/");
   });
