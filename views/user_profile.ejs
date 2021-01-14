@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include("./partials/head") %>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
@@ -16,9 +15,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="profile-head">
-                                    <h5>
+                                    <h3 style="color: #840707;">
                                       <%= user.first_name %> <%= user.last_name %>
-                                    </h5>
+                                    </h3>
                                     <h6>
                                         <%= user.gender %>
                                     </h6>
@@ -38,12 +37,12 @@
                 <div class="row">
                   <div class="col-md-4">
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <div class="tab-content profile-tab" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>User Id</label>
+                                                <label style="color: #840707;">Username</label>
                                             </div>
                                             <div class="col-md-6">
                                                 <p><%= user.name %></p>
@@ -51,7 +50,7 @@
                                         </div>
                                         <div class="row">
                                           <div class="col-md-6">
-                                              <label>City</label>
+                                              <label style="color: #840707;">City</label>
                                           </div>
                                           <div class="col-md-6">
                                               <p><%= user.city %></p>
@@ -59,7 +58,7 @@
                                       </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Email</label>
+                                                <label style="color: #840707;">Email</label>
                                             </div>
                                             <div class="col-md-6">
                                                 <p><%= user.email %></p>
@@ -82,7 +81,7 @@
                                   <label for="profile_picture">Profile Picture</label>
                                   <input class="form-control mb-3" type="profile_picture" name="profile_picture" placeholder="Enter Picture URL"
                                     style="width: 300px">
-                                  <button type="submit" class="btn btn-primary">Update</button>
+                                  <button type="submit" class="btn btn-primary" style="color: #840707;">Update</button>
                                 </div>
                               </form>
                                 </div>

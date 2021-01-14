@@ -13,13 +13,15 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     db.query(
       `
-    SELECT posts.*, post_categories.category as category
+    SELECT posts.*, post_categories.category as category, users.*
     FROM posts
-    JOIN post_categories ON post_categories.id = category_id;`
+    JOIN post_categories ON post_categories.id = category_id
+    JOIN users ON users.id = posts.owner_id;`
     )
       .then((data) => {
         const user = req.session.user_id;
         const allPosts = data.rows;
+        console.log(data.rows[0]);
         const templateVars = { posts: allPosts, user };
         res.render("index", templateVars);
       })
