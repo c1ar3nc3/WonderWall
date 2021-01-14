@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { getCategoryByName } = require("../helpers/new_post_helper");
 const { getUserById } = require("../helpers/userDatabaseQueries");
+const { getAllCategories, getPostsByCategoryId} = require("../helpers/categoryQueries")
 const {
   getPostDetailsById,
   likedPostByUser,
@@ -104,20 +105,29 @@ module.exports = (db) => {
   });
 
   //----------------- GET all posts by catagory_id ------------------------
-  //
+
   router.get("/sort/:category_id", (req, res) => {
-    db.query(
-      `SELECT *, post_categories.category as category
-    FROM posts
-    JOIN post_categories ON post_categories.id = posts.category_id
-    WHERE category_id = $1;`,
-      [req.params.category_id]
-    )
-      .then((data) => {
-        const user = req.session.user_id;
-        const sortedPosts = data.rows;
-        const templateVars = {posts: sortedPosts, user};
-        return res.render("category", templateVars);
+    const userId = req.session.user_id;
+    const categoryId = req.params.category_id;
+    const catByIdPromise = Promise.resolve(getPostsByCategoryId(categoryId));
+    const allCategoriesPromise = Promise.resolve(getAllCategories());
+    const allUsersPromise = Promise.resolve(getUserById(userId))
+
+    Promise.all([catByIdPromise, allCategoriesPromise, allUsersPromise])
+      .then((result) => {
+        if (result.length) {
+          const sortedPosts = result[0];
+          const categories = result[1];
+          const loggedIn = result[2];
+          const templateVars = {
+            posts: sortedPosts,
+            categories,
+            user: userId,
+            userInfo: loggedIn
+          };
+          return res.render("category", templateVars);
+        }
+        res.json({ message: "no resources found" });
       })
       .catch((err) => res.status(400).json({ error: err.message }));
   });
