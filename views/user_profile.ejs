@@ -1,52 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include("./partials/head") %>
-
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
   <body>
     <%- include("./partials/navbar") %>
-      <!-- Page Content -->
+              <div class="container emp-profile">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="<%= user.profile_picture %>" alt="user"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                      <%= user.first_name %> <%= user.last_name %>
+                                    </h5>
+                                    <h6>
+                                        <%= user.gender %>
+                                    </h6>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Edit Profile</a>
+                                </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                </div>
 
-      <h3>Profile</h3>
-      <table class="table">
-        <tbody>
-          <img src="<%= user.profile_picture %>" alt="user_image">
-          <tr>
-            <td>
-              <%= user.name %>
-            </td>
-            <td>
-              <%= user.email %>
-            </td>
-            <td>
-              <%= user.password %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <form action="update/:id" method="POST">
-        <div class="form-group mb-2">
-          <label for="first_name">First Name</label>
-          <input class="form-control mb-3" type="first_name" name="first_name" placeholder="Enter First Name"
-            style="width: 300px">
-          <label for="last_name">Last Name</label>
-          <input class="form-control mb-3" type="last_name" name="last_name" placeholder="Enter Last Name"
-            style="width: 300px">
-          <label for="city">City</label>
-          <input class="form-control mb-3" type="city" name="city" placeholder="Enter City" style="width: 300px">
-          <label for="gender">Gender</label>
-          <input class="form-control mb-3" type="gender" name="gender" placeholder="Enter Gender" style="width: 300px">
-          <label for="profile_picture">Profile Picture</label>
-          <input class="form-control mb-3" type="profile_picture" name="profile_picture" placeholder="Enter Picture URL"
-            style="width: 300px">
-          <button type="submit" class="btn btn-primary">Update</button>
-        </div>
-      </form>
-
-      <!-- Bootstrap core JavaScript -->
-      <script src="vendor/jquery/jquery.min.js">
-      </script>
-      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  </body>
-
-</html>
+                <div class="row">
+                  <div class="col-md-4">
+                    </div>
+                    <div class="col-md-5">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>User Id</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= user.name %></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="col-md-6">
+                                              <label>City</label>
+                                          </div>
+                                          <div class="col-md-6">
+                                              <p><%= user.city %></p>
+                                          </div>
+                                      </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= user.email %></p>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                              <form action="/api/users/update/:id" method="POST">
+                                <div class="form-group mb-2">
+                                  <label for="first_name">First Name</label>
+                                  <input class="form-control mb-3" type="first_name" name="first_name" placeholder="Enter First Name"
+                                    style="width: 300px">
+                                  <label for="last_name">Last Name</label>
+                                  <input class="form-control mb-3" type="last_name" name="last_name" placeholder="Enter Last Name"
+                                    style="width: 300px">
+                                  <label for="city">City</label>
+                                  <input class="form-control mb-3" type="city" name="city" placeholder="Enter City" style="width: 300px">
+                                  <label for="gender">Gender</label>
+                                  <input class="form-control mb-3" type="gender" name="gender" placeholder="Enter Gender" style="width: 300px">
+                                  <label for="profile_picture">Profile Picture</label>
+                                  <input class="form-control mb-3" type="profile_picture" name="profile_picture" placeholder="Enter Picture URL"
+                                    style="width: 300px">
+                                  <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                              </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+      </html>
