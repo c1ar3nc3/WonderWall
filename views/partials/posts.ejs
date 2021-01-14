@@ -15,8 +15,23 @@
           </p>
         </div>
         <div class="card-footer">
-          <i class="fas fa-exclamation"><a href="<%= post.url_address %> ">Visit</a></i>
-          <i class="fas fa-link"><a href="/post_details/<%= post.id %>/">More...</a></i>
+
+          <!-- LIKES -->
+          <span><a class="like-Unlike" href="#">Like</a></span>
+            <script>
+                $(".like-Unlike").click(function (e) {
+                  e.preventDefault()
+                if ($(this).html() == "Like") {
+                    $(this).html('Unlike');
+                }
+                else {
+                    $(this).html('Like');
+                }
+                });
+            </script>
+
+          <!-- <i class="fas fa-exclamation"><a href="<%= post.url_address %> ">Visit</a></i> -->
+          <!-- <i class="fas fa-link"><a href="/post_details/<%= post.id %>/">More...</a></i> -->
         </div>
       </div>
     </div>
