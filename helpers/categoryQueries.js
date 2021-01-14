@@ -3,7 +3,7 @@ const { db } = require("../server.js");
 //Categories
 //-------Get all categories-------
 const getAllCategories = () => {
-  const queryString = `SELECT category FROM post_categories;`;
+  const queryString = `SELECT * FROM post_categories;`;
   return db
     .query(queryString)
     .then((result) => {
@@ -46,8 +46,26 @@ const getCategoryByName = (category) => {
     .catch((err) => console.error(err.stack));
 };
 
+const getPostsByCategoryId = (category_id) => {
+  const queryString = `
+  SELECT *, post_categories.category as category
+  FROM posts
+  JOIN post_categories ON post_categories.id = posts.category_id
+  WHERE category_id = $1;`;
+  return db
+    .query(queryString, [category_id])
+    .then((result) => {
+      if (result.rows.length) {
+        return result.rows;
+      }
+      result.json({ message: "no resources found" });
+    })
+    .catch((err) => console.error(err.stack));
+};
+
 module.exports = {
   getCategoryByPost,
   getCategoryByName,
   getAllCategories,
+  getPostsByCategoryId
 };
