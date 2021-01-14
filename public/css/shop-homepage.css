@@ -1,8 +1,8 @@
 /* Background of the whole page */
 body {
   padding: 5em;
-  background-color: #ede4b6;
-background-image: url("https://www.transparenttextures.com/patterns/brick-wall-dark.png");
+  background-color: #f8f8f4;
+/* background-image: url("https://www.transparenttextures.com/patterns/brick-wall-dark.png"); */
 margin: 0;
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   font-size: 1rem;
@@ -14,51 +14,144 @@ margin: 0;
 
 /* navbar whole line color should include !important after color */
 nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top {
-  background-color: #F5D2D3!important;
+  background-color: #f8f8f4!important;
+    box-shadow: 0 1px 9px 0 rgba(0,0,0,0.2), 0 1px 20px 0 rgba(0,0,0,0.19);
 }
 
 /*Name text  */
 .navbar-dark .navbar-brand {
-  color: rgb(179, 50, 50);
+  color: #840707;
+  font-weight: bold;
+}
+/* HOVER Name text  */
+.navbar-dark .navbar-brand:focus, .navbar-dark .navbar-brand:hover {
+  color: #290707;
+  font-weight: bolder;
 }
 
 /*Text My resources, profile, newPost, logout  */
 .navbar-dark .navbar-nav .nav-link {
-  color: rgb(180, 39, 39);
+  color: #783f1e;
+
+}
+
+/*HOVER ON Text My resources, profile, newPost, logout  */
+.navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover {
+  color: #030101;
 }
 
 /*Text HOME  */
 .navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show>.nav-link {
-  color: rgb(156, 25, 25);
+  color: #5c0505;
+  font-size: x-large;
+}
+
+/*HOVER Text HOME  */
+.navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover {
+  color: #444;
+  text-shadow:
+    1px 0px 1px #ccc, 0px 1px 1px #eee,
+    2px 1px 1px #ccc, 1px 2px 1px #eee,
+    3px 2px 1px #ccc, 2px 3px 1px #eee,
+    4px 3px 1px #ccc, 3px 4px 1px #eee,
+    5px 4px 1px #ccc, 4px 5px 1px #eee,
+    6px 5px 1px #ccc, 5px 6px 1px #eee,
+    7px 6px 1px #ccc;
+}
+
+/*HEADINGS  */
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  margin-bottom: .5rem;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: #596464;
+}
+
+/*SEARCH */
+input#search-input.form-control.bg-graylight.border-0.font-weight-bold {
+background-color: #ecece5;
+box-shadow: 0 0px 0px 0 rgba(0,0,0,0.1), 0 1px 1px 0 rgba(0,0,0,0.07);
+width: 200%;
+  padding: .5rem .75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color:#585c60;
+  background-color: #f2f2ee;
+  background-image: none;
+  background-clip: padding-box;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: .25rem;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 0px solid rgba(59, 26, 26, 0.5);
+  padding: .5rem .75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  border-radius: .25rem;
+  transition: all .15s ease-in-out;
+    box-shadow: 0 0px 0px 0 rgba(0,0,0,0.1), 0 1px 4px 0 rgba(0,0,0,0.07);
 }
 
 /* btn save changes from new post page */
 .btn-primary {
-  color: rgb(14, 13, 13);
-  background-color: #F9C7BE;
+  color: rgb(19, 18, 18);
+  background-color: #f8f8f4;
+  border:1px solid ;
+  border-color: #24313f;
+  border-color: rgba(172, 170, 170, 1);
 }
 /* btn save changes HOVER from new post page */
 .btn-primary:hover {
   color: rgb(19, 18, 18);
-  background-color: #ebcabb;
+  background-color: #f8f8f4;
 }
+
+/* btn save changes ACTIVE */
+.btn-primary.active, .btn-primary:active, .show>.btn-primary.dropdown-toggle {
+  background-color: #f8f8f4;
+  background-image: none;
+  border-color: #0a0a0a;
+}
+/* btn save changes FOCUS */
+.btn-primary.focus, .btn-primary:focus {
+  box-shadow: 0 0 0 2px rgb(41 42 43 / 50%);
+}
+
 /* btns categories */
 .btn-secondary {
   color: rgb(14, 13, 13);
-  background-color: #F9C7BE;
+  background-color: #f8f8f4;
 }
 /* btns categories HOVER */
 .btn-secondary:hover {
   color: rgb(19, 18, 18);
-  background-color: #F9C7BE;
+  background-color: #f8f8f4;
+  border:1px solid ;
+  border-color: rgba(172, 170, 170, 1);
 }
 /* input color */
 .form-control {
-  background-color: #ebbcbe;
+  background-color: #f8f8f4;
 }
+/* input  FOCUS color */
+.form-control:focus {
+  color: #495057;
+  background-color: #f8f8f4;
+  border-color: #80bdff;
+  outline: 0;
+}
+
 /* FOOTER */
 footer.py-5.bg-dark {
-background-color: navajowhite!important;
+background-color: #f8f8f4!important;
 }
 
 /*POST CARDS */
@@ -70,15 +163,28 @@ background-color: navajowhite!important;
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #F7E1D3;
+  background-color: #f8f8f4;
   background-clip: border-box;
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2), 0 2px 7px 0 rgba(0,0,0,0.19);
 }
+/*POST CARDS footer */
+.card-footer {
+  padding: .75rem 1.25rem;
+  background-color: rgba(0,0,0,0.01);
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
 
 /* Links inside post cards */
 a {
-  color: #8c96a1;
+  color: #596464;
   text-decoration: none;
   background-color: transparent;
+}
+
+a:hover {
+  color: #2e3031;
+  text-decoration: underline;
 }
