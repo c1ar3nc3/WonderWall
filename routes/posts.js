@@ -131,6 +131,7 @@ module.exports = (db) => {
         return result;
       })
       .then((id) => {
+        console.log("CATEGORY ID!!!!!!!!!!!!!!!!!!!!!!! :", id);
         queryParams = [
           req.body.title,
           req.body.post_description,
@@ -138,7 +139,9 @@ module.exports = (db) => {
           req.body.image_url,
           id,
           req.session.user_id,
+
         ];
+        console.log("queryParams!!!!!!!!!!!!!! :", queryParams);
         db.query(
           `INSERT INTO posts (title, post_description, url_address, image_url, category_id, owner_id) VALUES (
         $1,
@@ -148,7 +151,7 @@ module.exports = (db) => {
         $5,
         $6
         )
-        RETURNING *;`,
+        ;`,
           queryParams
         );
       })
