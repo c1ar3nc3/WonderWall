@@ -244,3 +244,8 @@ a:hover {
   margin-right: -15px;
   margin-left: -15px;
 } */
+
+.navbar-dark .navbar-toggler {
+  color: rgb(32 30 30 / 50%);
+  border-color: rgb(11 11 11);
+}
