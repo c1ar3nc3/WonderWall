@@ -19,10 +19,10 @@ module.exports = {
   getPostDetailsById,
 };
 
-/// Posts
+/// Like Or Unlike
 /**
  * Get a single user from the database given their email.
- * @param {String} id The email of the user.
+ * @param {String} user_id The email of the user.
  * @return {Promise<{}>} A promise to the user.
  */
 const likedPostByUser = (user_id, post_id) => {
@@ -35,7 +35,41 @@ const likedPostByUser = (user_id, post_id) => {
     .catch((err) => console.error(err.stack));
 };
 
+/// Posts Owner
+/**
+ * Get a single user from the database given their email.
+ * @param {String} id The email of the user.
+ * @return {Promise<{}>} A promise to the user.
+ */
+const postsOwnById = (user_id) => {
+  const queryString = `SELECT * FROM posts WHERE owner_id = $1`;
+  return db
+    .query(queryString, [user_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => console.error(err.stack));
+};
+
+/// Liked Posts by ID
+/**
+ * Get a single user from the database given their email.
+ * @param {String} id The email of the user.
+ * @return {Promise<{}>} A promise to the user.
+ */
+const allLikedPostsByUser = (user_id) => {
+  const queryString = `SELECT posts.*, user_feedbacks.* FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE user_id = $1 AND likes = TRUE`;
+  return db
+    .query(queryString, [user_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => console.error(err.stack));
+};
+
 module.exports = {
   getPostDetailsById,
   likedPostByUser,
+  postsOwnById,
+  allLikedPostsByUser,
 };

@@ -5,6 +5,8 @@ const { getUserById } = require("../helpers/userDatabaseQueries");
 const {
   getPostDetailsById,
   likedPostByUser,
+  postsOwnById,
+  allLikedPostsByUser,
 } = require("../helpers/postDatabaseQueries");
 
 module.exports = (db) => {
@@ -61,15 +63,14 @@ module.exports = (db) => {
   //----------------- GET all posts for logged in user------------------
 
   router.get("/my_resources", (req, res) => {
-    db.query(
-      `SELECT * FROM posts WHERE owner_id = $1 UNION SELECT posts.* FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE user_id = $1;`,
-      [req.session.user_id]
-    )
+    const user = req.session.user_id;
+    const usersPost = Promise.resolve(postsOwnById(user));
+    const likedPosts = Promise.resolve(allLikedPostsByUser(user));
+    Promise.all([usersPost, likedPosts])
       .then((result) => {
-        // console.log(result);
-        const user = req.session.user_id;
-        const MyPosts = result.rows;
-        const templateVars = { posts: MyPosts, user };
+        const myPosts = result[0];
+        const likedPosts = result[1];
+        const templateVars = { likeObject: likedPosts, posts: myPosts, user };
         res.render("my_resources", templateVars);
       })
       .catch((err) => res.status(400).json({ error: err.message }));
@@ -88,7 +89,6 @@ module.exports = (db) => {
         if (result.length) {
           const postDetails = result[0][0];
           const likedOrNot = result[1][0] || false;
-          console.log("liked or not", likedOrNot);
           const templateVars = {
             likeObject: likedOrNot,
             post_details: postDetails,
@@ -114,7 +114,7 @@ module.exports = (db) => {
       .then((data) => {
         const user = req.session.user_id;
         const sortedPosts = data.rows;
-        const templateVars = {posts: sortedPosts, user};
+        const templateVars = { posts: sortedPosts, user };
         return res.render("category", templateVars);
       })
       .catch((err) => res.status(400).json({ error: err.message }));
@@ -160,20 +160,17 @@ module.exports = (db) => {
   router.get("/post_details/:id/like", (req, res) => {
     getPostDetailsById(req.params.id)
       .then((result) => {
-        console.log(result);
         if (
           result[result.length - 1].user_id &&
           result[result.length - 1].post_id &&
           result[result.length - 1].user_id == req.session.user_id
         ) {
-          console.log("UPDATE is working");
           const queryParams = [req.session.user_id, result[0].post_id];
           db.query(
             `UPDATE user_feedbacks SET likes = NOT likes WHERE user_id = $1 AND post_id = $2`,
             queryParams
           );
         } else {
-          console.log("INSERT is working");
           const queryParams = [req.session.user_id, result[0].post_id, "t"];
           db.query(
             `INSERT INTO user_feedbacks (user_id, post_id, likes) VALUES ($1, $2, $3);`,
