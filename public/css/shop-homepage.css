@@ -130,6 +130,12 @@ width: 200%;
   color: rgb(14, 13, 13);
   background-color: #f8f8f4;
 }
+
+.btn-info {
+  color: rgb(14, 13, 13);
+  background-color: #f8f8f4;
+}
+
 /* btns categories HOVER */
 .btn-secondary:hover {
   color: rgb(19, 18, 18);
@@ -137,6 +143,18 @@ width: 200%;
   border:1px solid ;
   border-color: rgba(172, 170, 170, 1);
 }
+
+.btn-info:hover {
+  color: rgb(19, 18, 18);
+  background-color: #ebebe3;
+  /* border:1px solid ; */
+  border-color: rgba(172, 170, 170, 1);
+}
+
+.btn-info.focus, .btn-info:focus {
+  box-shadow: 0 0 0 3px rgba(64, 66, 66, 0.5);
+}
+
 /* input color */
 .form-control {
   background-color: #f8f8f4;
@@ -179,14 +197,15 @@ background-color: #f8f8f4!important;
 
 /* Links inside post cards */
 a {
-  color: #596464;
+  color: #191a1a;
+  font-weight: bolder;
   text-decoration: none;
   background-color: transparent;
 }
 
 a:hover {
-  color: #2e3031;
-  text-decoration: underline;
+  color: #1d1e1f;
+  text-decoration: none;
 }
 
 /* RATING STARS */
