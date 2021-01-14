@@ -50,7 +50,7 @@ module.exports = (db) => {
       `UPDATE users SET first_name = $1, last_name = $2, city = $3, gender = $4, profile_picture = $5  WHERE id = $6 RETURNING *;`,
       queryParams
     )
-      .then((result) => res.redirect(`/api/users/${req.session.user_id}`))
+      .then((result) => res.redirect("back"))
       .catch((err) => console.error(err.stack));
   });
 

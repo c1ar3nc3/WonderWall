@@ -2,38 +2,69 @@
 <html lang="en">
 
 
-  <%- include("./partials/head") %>
+<%- include("./partials/head") %>
 
 
-<body>
-  <%- include("./partials/navbar") %>
-    <!-- Page Content -->
-    <main class="container">
-      <div class="row">
-        <h2 class="col-12">
-          <%= post_details.title %>
-        </h2>
+  <body>
+    <%- include("./partials/navbar") %>
+      <!-- Page Content -->
+      <main class="container">
+        <div class="row">
+          <h2 class="col-12">
+            <%= post_details.title %>
+          </h2>
 
-      </div>
-      <div class="card">
-
-        <div class="col-md-8 resource-field">
-          <img src="<%= post_details.image_url%>" width="500" height="600">
-          <br><br>
-          <p>
-            <%= post_details.post_description %>
-          </p>
-          <a href="<%= post_details.url_address %>">
-            <%= post_details.url_address %>
-          </a>
-          <br>
-          <strong>
-            Created at: <%= post_details.date_created %>
-          </strong>
         </div>
-      </div>
-    </main>
+        <div class="card">
+          <div class="col-md-12 resource-field">
+            <img src="<%= post_details.image_url%>" width="500" height="600">
+            <br><br>
+            <p>
+              <%= post_details.post_description %>
+            </p>
+            <a href="<%= post_details.url_address %>">
+              <%= post_details.url_address %>
+            </a>
+            <br>
+            <strong>
+              Created: <%= post_details.date_created.toDateString() %>
+            </strong>
+          </div>
+        </div>
+      </main>
 
-</body>
+
+      <section class="resource-and-reviews">
+
+        <div id="resource-section">
+          <% if (user) { %>
+            <div id="review-section">
+              <div id="review-header">
+                <% if (!likeObject.likes) { %>
+                  <a href="/post_details/<%= post_details.post_id %> /like"><i class="fa fa-heart"
+                      data-likes="<%=  post_details.likes %>">LIKE</i></a>
+                  <% } else { %>
+                    <a href="/post_details/<%= post_details.post_id %> /like"><i class="fa fa-heart"
+                        data-likes="<%=  post_details.likes %>">UNLIKE</i></a>
+                    <% } %>
+              </div>
+              <form method="POST" , action="/......./<%= user.id %>/reviews" id="review-contents">
+                <textarea name="comment" class="review-component" id="reivew-comment"
+                  placeholder="leave your review"></textarea>
+                <select name="rating" id="myselect">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <button class="review-component" id="submit-review" type="submit"><span></span>submit</span></button>
+              </form>
+              <% } %>
+            </div>
+        </div>
+      </section>
+
+  </body>
 
 </html>
