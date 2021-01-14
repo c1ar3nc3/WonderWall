@@ -42,7 +42,7 @@ module.exports = (db) => {
       `%${req.body.title}%`,
     ])
       .then((result) => {
-        console.log();
+        // console.log();
         if (result.rows.length) {
           const user = req.session.user_id;
           const allPosts = result.rows;
@@ -64,7 +64,7 @@ module.exports = (db) => {
       [req.session.user_id]
     )
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         const user = req.session.user_id;
         const MyPosts = result.rows;
         const templateVars = { posts: MyPosts, user };
