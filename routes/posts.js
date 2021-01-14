@@ -7,6 +7,7 @@ const {
   likedPostByUser,
   postsOwnById,
   allLikedPostsByUser,
+  postComments,
 } = require("../helpers/postDatabaseQueries");
 
 module.exports = (db) => {
@@ -20,7 +21,7 @@ module.exports = (db) => {
       `
     SELECT posts.*, post_categories.category as category
     FROM posts
-    JOIN post_categories ON post_categories.id = category_id;`
+    JOIN post_categories ON post_categories.id = category_id ORDER BY date_created;`
     )
       .then((data) => {
         const user = req.session.user_id;
@@ -83,16 +84,19 @@ module.exports = (db) => {
     const postId = req.params.id;
     const postByIdPromise = Promise.resolve(getPostDetailsById(postId));
     const likedByUserPromise = Promise.resolve(likedPostByUser(userId, postId));
+    const allCommentsPromise = Promise.resolve(postComments(postId));
 
-    Promise.all([postByIdPromise, likedByUserPromise])
+    Promise.all([postByIdPromise, likedByUserPromise, allCommentsPromise])
       .then((result) => {
         if (result.length) {
           const postDetails = result[0][0];
           const likedOrNot = result[1][0] || false;
+          const commentsArray = result[2];
           const templateVars = {
             likeObject: likedOrNot,
             post_details: postDetails,
             user: userId,
+            comments: commentsArray,
           };
           return res.render("post_details", templateVars);
         }
@@ -131,7 +135,7 @@ module.exports = (db) => {
         return result;
       })
       .then((id) => {
-        queryParams = [
+        const queryParams = [
           req.body.title,
           req.body.post_description,
           req.body.url_address,
@@ -179,6 +183,21 @@ module.exports = (db) => {
         }
       })
       .then((result) => res.redirect("back"))
+      .catch((err) => res.status(400).json({ error: err.message }));
+  });
+
+  //------------------------------POST new Comment----------------------
+  router.post("/post_details/:id/comment", (req, res) => {
+    const userId = req.session.user_id;
+    const postId = req.params.id;
+    const comment = req.body.comment_text;
+    const queryParams = [userId, postId, comment];
+    console.log(queryParams);
+    db.query(
+      `INSERT INTO user_feedbacks (user_id, post_id, comment) VALUES ($1, $2, $3);`,
+      queryParams
+    )
+      .then(() => res.redirect("back"))
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
