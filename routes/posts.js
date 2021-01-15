@@ -199,7 +199,15 @@ module.exports = (db) => {
           queryParams
         );
       })
-      .then(() => res.redirect("/"))
+      // .then((result) => {
+      //   return db.query(
+      //     `INSERT INTO user_feedbacks (user_id, post_id) SELECT $1,id FROM posts ORDER BY id DESC LIMIT 1;`,
+      //     [req.session.user_id]
+      //   );
+      // })
+      .then(() => {
+        res.redirect("/");
+      })
       .catch((err) => console.error(err.stack));
   });
 

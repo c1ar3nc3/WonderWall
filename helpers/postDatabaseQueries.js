@@ -47,7 +47,7 @@ const postsOwnById = (user_id) => {
  * @return {Promise<{}>} A promise to the user.
  */
 const allLikedPostsByUser = (user_id) => {
-  const queryString = `SELECT posts.*, user_feedbacks.* FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE user_id = $1 AND likes = TRUE`;
+  const queryString = `SELECT posts.*, user_feedbacks.* FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE user_id = $1 AND likes = TRUE AND comment IS NULL`;
   return db
     .query(queryString, [user_id])
     .then((result) => {
@@ -89,7 +89,7 @@ const avgRateByPost = (post_id) => {
  * @return {Promise<{}>} A promise to the user.
  */
 const avgRateAllPosts = () => {
-  const queryString = `SELECT posts.*, ROUND(AVG(rating),2) as average_rating FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE rating != 0 GROUP BY posts.id`;
+  const queryString = `SELECT posts.*, ROUND(AVG(rating),2) as average_rating FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id GROUP BY posts.id ORDER BY posts.id DESC`;
   return db
     .query(queryString)
     .then((result) => {
