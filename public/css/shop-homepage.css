@@ -228,24 +228,10 @@ a:hover {
   color: orange;
 }
 
-.row {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  /* flex-wrap: nowrap; */
-  margin-right: -15px;
-  margin-left: -15px;
-}
-
-/* *, ::after, ::before {
-  box-sizing: content-box;
-} */
-
 .navbar-dark .navbar-toggler {
   color: rgb(32 30 30 / 50%);
   border-color: rgb(11 11 11);
 }
-
 
 /* profile image */
 
@@ -253,9 +239,8 @@ div img.profile-image {
   width: 15rem;
 }
 
-
 element.style {
-  width: 20REM;
+  width: 20rem;
 }
 
 /* BUTTON GO UP */
@@ -277,4 +262,20 @@ element.style {
 
 #myBtn:hover {
   background-color: #555; /* Add a dark-grey background on hover */
+}
+.bg-white {
+  background-color: #fff !important;
+  border-style: solid;
+  border-radius: 20px;
+}
+
+#review-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#comment-form {
+  width: 70em;
+  margin-left: 9em;
 }
