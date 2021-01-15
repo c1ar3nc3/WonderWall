@@ -17,15 +17,15 @@
         <div class="card">
           <div class="col-md-12">
             <img src="<%= post_details.image_url%>" width="500" height="600">
-            <p>
+            <p id="description-post">
               <%= post_details.post_description %>
             </p>
             <a href="<%= post_details.url_address %>">
               <%= post_details.url_address %>
             </a>
             <br>
-            <strong>
-              Created: <%= post_details.date_created.toDateString() %>
+            <strong id="created">
+              <%= post_details.date_created.toDateString() %>
             </strong>
           </div>
         </div>
