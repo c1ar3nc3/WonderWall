@@ -12,7 +12,6 @@ const {
   postsOwnById,
   allLikedPostsByUser,
   postComments,
-  avgRateByPost,
   avgRateAllPosts,
   searchPostsByTitle,
   postFeedById,
@@ -206,20 +205,18 @@ module.exports = (db) => {
 
   //------------------------Post like-------------------------
   router.get("/post_details/:id/like", (req, res) => {
-    getPostDetailsById(req.params.id)
+    postFeedById(req.params.id, req.session.user_id)
       .then((result) => {
-        if (
-          result[result.length - 1].user_id &&
-          result[result.length - 1].post_id &&
-          result[result.length - 1].user_id == req.session.user_id
-        ) {
-          const queryParams = [req.session.user_id, result[0].post_id];
-          db.query(
-            `UPDATE user_feedbacks SET likes = NOT likes WHERE user_id = $1 AND post_id = $2`,
-            queryParams
-          );
+        if (result.length) {
+          if (result[0].user_id == req.session.user_id) {
+            const queryParams = [req.session.user_id, result[0].post_id];
+            db.query(
+              `UPDATE user_feedbacks SET likes = NOT likes WHERE user_id = $1 AND post_id = $2`,
+              queryParams
+            );
+          }
         } else {
-          const queryParams = [req.session.user_id, result[0].post_id, "t"];
+          const queryParams = [req.session.user_id, req.params.id, "t"];
           db.query(
             `INSERT INTO user_feedbacks (user_id, post_id, likes) VALUES ($1, $2, $3);`,
             queryParams
