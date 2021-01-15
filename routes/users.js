@@ -27,7 +27,6 @@ module.exports = (db) => {
     const userId = req.session.user_id;
     getUserById(userId)
       .then((result) => {
-        console.log(result);
         if (result) {
           const templateVars = { user_detail: result[0] };
           res.render("user_profile", templateVars);
