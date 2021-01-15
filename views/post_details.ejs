@@ -35,7 +35,7 @@
       <section class="resource-and-reviews">
         <div id="resource-section">
           <% if (user_detail) { %>
-            <form id="comment-form" action="/post_details/<%= post_details.post_id %>/comment" method="POST">
+            <form id="comment-form" action="/post_details/<%= post_details.id %>/comment" method="POST">
               <div class="bg-light p-2">
                 <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
                     src="<%= user_detail.profile_picture %> " width="40"><textarea name="comment_text"

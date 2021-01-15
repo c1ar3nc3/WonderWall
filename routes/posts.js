@@ -93,6 +93,15 @@ module.exports = (db) => {
       .then((result) => {
         const myPosts = result[0];
         const likedPosts = result[1];
+        console.log(likedPosts);
+
+        // const likedPosts = result[1].filter(
+        //   (thing, index, self) =>
+        //     index ===
+        //     self.findIndex(
+        //       (t) => t.place === thing.place && t.name === thing.name
+        //     )
+        // );
         const user = result[2][0];
         const templateVars = {
           likeObject: likedPosts,
