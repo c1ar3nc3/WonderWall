@@ -48,7 +48,7 @@ const getCategoryByName = (category) => {
 
 const getPostsByCategoryId = (category_id) => {
   const queryString = `
-  SELECT *, post_categories.category as category
+  SELECT posts.*, post_categories.category as category
   FROM posts
   JOIN post_categories ON post_categories.id = posts.category_id
   WHERE category_id = $1;`;
@@ -67,5 +67,5 @@ module.exports = {
   getCategoryByPost,
   getCategoryByName,
   getAllCategories,
-  getPostsByCategoryId
+  getPostsByCategoryId,
 };

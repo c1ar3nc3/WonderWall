@@ -6,8 +6,8 @@
 
     <%- include("./partials/navbar") %>
       <div class="container">
-        <div class="row">
-          <div class="col-lg-3">
+        <div class="row" style="flex-wrap: nowrap; position: fixed;">
+          <div class="col-lg-3" id="category-bar">
             <h1 class="my-4">Explore...</h1>
             <% for (let category of categories) { %>
               <div class="list-group">
@@ -17,13 +17,31 @@
               </div>
               <% } %>
           </div>
-          <%- include("./partials/posts") %>
+          <div class="row">
+            <% for (let post of posts) { %>
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                  <a href="/post_details/<%= post.id %>/"><img class="card-img-top" src="<%= post.image_url %>"
+                      alt="Post Image" /></a>
+                  <div class="card-body">
+                    <h4 class="card-title">
+                      <a href="/post_details/<%= post.id %>/">
+                        <%= post.title %>
+                      </a>
+                    </h4>
+                    <p class="card-text">
+                      <%= post.post_description %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+          </div>
 
-            <scri pt src="vendor/jquery/jquery.min.js">
-              </script>
-              <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-              <!--Button GO UP  -->
-<a id="myBtn" href="#top">Top</a>
+        </div>
+        <scri pt src="vendor/jquery/jquery.min.js">
+          </script>
+          <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   </body>
 
 </html>
