@@ -35,11 +35,11 @@
           <% for (let post of likeObject) { %>
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
-                <a href="/post_details/<%= post.id %>/"><img class="card-img-top" src="<%= post.image_url %>"
+                <a href="/post_details/<%= post.post_id %>/"><img class="card-img-top" src="<%= post.image_url %>"
                     alt="Post Image" /></a>
                 <div class="card-body">
                   <h4 class="card-title">
-                    <a href="/post_details/<%= post.id %>/">
+                    <a href="/post_details/<%= post.post_id %>/">
                       <%= post.title %>
                     </a>
                   </h4>

@@ -268,14 +268,3 @@ element.style {
   border-style: solid;
   border-radius: 20px;
 }
-
-#review-section {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-#comment-form {
-  width: 70em;
-  margin-left: 9em;
-}

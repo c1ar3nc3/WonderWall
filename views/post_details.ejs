@@ -8,95 +8,105 @@
   <body>
     <%- include("./partials/navbar") %>
       <!-- Page Content -->
-      <main class="container">
-        <div class="d-flex p-2">
-          <h2>
-            <%= post_details.title %>
-          </h2>
-        </div>
-        <div class="card">
-          <div class="col-md-12">
-            <img src="<%= post_details.image_url%>" width="500" height="600">
-            <p>
-              <%= post_details.post_description %>
-            </p>
-            <a href="<%= post_details.url_address %>">
-              <%= post_details.url_address %>
-            </a>
-            <br>
-            <strong>
-              Created: <%= post_details.date_created.toDateString() %>
-            </strong>
-          </div>
-        </div>
-      </main>
 
 
-      <section class="resource-and-reviews">
-        <div id="resource-section">
-          <% if (user_detail) { %>
-            <form id="comment-form" action="/post_details/<%= post_details.id %>/comment" method="POST">
-              <div class="bg-light p-2">
-                <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
-                    src="<%= user_detail.profile_picture %> " width="40"><textarea name="comment_text"
-                    class="form-control ml-1 shadow-none textarea"></textarea></div>
-                <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none" type="submit">Post
-                    comment</button></div>
-              </div>
-            </form>
-            <div id="review-section">
-              <div id="review-header">
-                <% if ((!likeObject.likes) || likeObject.likes==false) { %>
-                  <a href="/post_details/<%= post_details.id %> /like"><i class="far fa-heart">LIKE</i></a>
-                  <% } else { %>
-                    <a href="/post_details/<%= post_details.id %> /like"><i class="fas fa-heart"
-                        data-likes="<%=  post_details.likes %>">UNLIKE</i></a>
-                    <% } %>
-              </div>
-              <div>
-                <form method="POST" action="/post_details/<%= post_details.id %>/rate" id="review-contents">
-                  <select name="rating" id="myselect">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
-                  <button class="review-component" id="submit-review" type="submit"><span></span>submit</span></button>
-                </form>
-              </div>
-            </div>
-        </div>
-      </section>
 
-      <% for( let comment of comments ) { %>
-
-        <div class="container mt-5">
-          <div class="d-flex justify-content-center row">
-            <div class="col-md-8">
-              <div class="d-flex flex-column comment-section">
-                <div class="bg-white p-2">
-                  <div class="d-flex flex-row user-info"><img class="rounded-circle"
-                      src="<%= comment.profile_picture %> " width="40">
-                    <div class="d-flex flex-column justify-content-start ml-2"><span
-                        class="d-block font-weight-bold name">
-                        <%= comment.name %>
-                      </span></div>
-                  </div>
-                  <div class="mt-2">
-                    <p class="comment-text">
-                      <%= comment.comment %>
-                    </p>
+      <div class="container portfolio">
+        <div class="bio-info">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="bio-image">
+                    <img src="<%= post_details.image_url%>" alt="image" width="350" height="500" />
                   </div>
                 </div>
               </div>
             </div>
+            <div class="col-md-6">
+              <div class="bio-content">
+                <h1 style="color: #840707; padding-top: 25px;">
+                  <%= post_details.title %>
+                </h1></br>
+                <h6>
+                  <%= post_details.post_description %>
+                </h6></br>
+                <a href="<%= post_details.url_address %>">
+                  <%= post_details.url_address %>
+                </a></br>
+                <strong></br>
+                  Created: <%= post_details.date_created.toDateString() %>
+                </strong></br>
+                <section class="resource-and-reviews">
+                  <div id="resource-section">
+                    <% if (user_detail) { %>
+                      <form id="comment-form" action="/post_details/<%= post_details.id %>/comment" method="POST">
+                        <div class="bg-light p-2">
+                          <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
+                              src="<%= user_detail.profile_picture %> " width="40"><textarea name="comment_text"
+                              class="form-control ml-1 shadow-none textarea"></textarea></div>
+                          <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none"
+                              type="submit">Post
+                              comment</button></div>
+                        </div>
+                      </form>
+                      <div id="review-section">
+                        <div id="review-header">
+                          <% if ((!likeObject.likes) || likeObject.likes==false) { %>
+                            <a href="/post_details/<%= post_details.id %> /like"><i class="far fa-heart">LIKE</i></a>
+                            <% } else { %>
+                              <a href="/post_details/<%= post_details.id %> /like"><i class="fas fa-heart"
+                                  data-likes="<%=  post_details.likes %>">UNLIKE</i></a>
+                              <% } %>
+                        </div>
+                        <div>
+                          <form method="POST" action="/post_details/<%= post_details.id %>/rate" id="review-contents">
+                            <select name="rating" id="myselect">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                            </select>
+                            <button class="review-component" id="submit-review"
+                              type="submit"><span></span>submit</span></button>
+                          </form>
+                        </div>
+                      </div>
+                  </div>
+                </section>
+              </div>
+            </div>
           </div>
+          <% for( let comment of comments ) { %>
+            <div class="container mt-5">
+              <div class="d-flex justify-content-center row">
+                <div class="col-md-8">
+                  <div class="d-flex flex-column comment-section">
+                    <div class="bg-white p-2">
+                      <div class="d-flex flex-row user-info"><img class="rounded-circle"
+                          src="<%= comment.profile_picture %> " width="40">
+                        <div class="d-flex flex-column justify-content-start ml-2"><span
+                            class="d-block font-weight-bold name">
+                            <%= comment.name %>
+                          </span></div>
+                      </div>
+                      <div class="mt-2">
+                        <p class="comment-text">
+                          <%= comment.comment %>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
+      </div>
+      <% } %>
         <% } %>
-
-          <% } %>
-
+          </div>
+          </div>
   </body>
 
 </html>
