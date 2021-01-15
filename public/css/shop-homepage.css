@@ -240,12 +240,20 @@ a:hover {
 *, ::after, ::before {
   box-sizing: content-box;
 }
-  /* flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-} */
 
 .navbar-dark .navbar-toggler {
   color: rgb(32 30 30 / 50%);
   border-color: rgb(11 11 11);
+}
+
+
+/* profile image */
+
+div img.profile-image {
+  width: 15rem;
+}
+
+
+element.style {
+  width: 20REM;
 }
