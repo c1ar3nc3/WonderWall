@@ -4,7 +4,8 @@ const { db } = require("../server.js");
  * @return {Promise<{}>} A promise to the user.
  */
 const getPostDetailsById = (id) => {
-  const queryString = `SELECT DISTINCT posts.*, user_feedbacks.* FROM posts LEFT JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE posts.id = $1 ORDER BY user_feedbacks.id`;
+  // const queryString = `SELECT DISTINCT posts.*, user_feedbacks.* FROM posts LEFT JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE posts.id = $1 ORDER BY user_feedbacks.id`;
+  const queryString = `SELECT DISTINCT posts.* FROM posts WHERE id = $1 `;
   return db
     .query(queryString, [id])
     .then((result) => {
@@ -69,10 +70,71 @@ const postComments = (post_id) => {
     .catch((err) => console.error(err.stack));
 };
 
+/// Average rate for a post
+/**
+ * @return {Promise<{}>} A promise to the user.
+ */
+const avgRateByPost = (post_id) => {
+  const queryString = `SELECT posts.title, ROUND(AVG(rating),2) as average_rating FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE post_id = $1 AND rating != 0 GROUP BY posts.title;`;
+  return db
+    .query(queryString, [post_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => console.error(err.stack));
+};
+
+/// Average rate for all posts
+/**
+ * @return {Promise<{}>} A promise to the user.
+ */
+const avgRateAllPosts = () => {
+  const queryString = `SELECT posts.*, ROUND(AVG(rating),2) as average_rating FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE rating != 0 GROUP BY posts.id`;
+  return db
+    .query(queryString)
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => console.error(err.stack));
+};
+
+/// Posts by searching title
+/**
+ * @return {Promise<{}>} A promise to the user.
+ */
+const searchPostsByTitle = (title) => {
+  return db
+    .query(`SELECT * FROM posts WHERE title iLIKE $1;`, [`%${title}%`])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => console.error(err.stack));
+};
+
+/// feedbacks by post and id
+/**
+ * @return {Promise<{}>} A promise to the user.
+ */
+const postFeedById = (post_id, user_id) => {
+  return db
+    .query(
+      `SELECT DISTINCT posts.id, posts.title, user_feedbacks.* FROM posts LEFT JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE posts.id = $1 AND user_id =$2 ORDER BY user_feedbacks.id;`,
+      [post_id, user_id]
+    )
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => console.error(err.stack));
+};
+
 module.exports = {
   getPostDetailsById,
   likedPostByUser,
   postsOwnById,
   allLikedPostsByUser,
   postComments,
+  avgRateByPost,
+  avgRateAllPosts,
+  searchPostsByTitle,
+  postFeedById,
 };

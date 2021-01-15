@@ -67,5 +67,5 @@ module.exports = {
   getCategoryByPost,
   getCategoryByName,
   getAllCategories,
-  getPostsByCategoryId
+  getPostsByCategoryId,
 };
