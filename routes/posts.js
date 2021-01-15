@@ -147,19 +147,19 @@ module.exports = (db) => {
     const categoryId = req.params.category_id;
     const catByIdPromise = Promise.resolve(getPostsByCategoryId(categoryId));
     const allCategoriesPromise = Promise.resolve(getAllCategories());
-    const allUsersPromise = Promise.resolve(getUserById(userId));
+    const getUserInfoPromise = Promise.resolve(getUserById(userId));
 
-    Promise.all([catByIdPromise, allCategoriesPromise, allUsersPromise])
+    Promise.all([catByIdPromise, allCategoriesPromise, getUserInfoPromise])
       .then((result) => {
         if (result.length) {
           const sortedPosts = result[0];
           const categories = result[1];
-          const loggedIn = result[2];
+          const loggedIn = result[2][0];
           const templateVars = {
             posts: sortedPosts,
             categories,
-            user_detail: userId,
-            userInfo: loggedIn,
+            user_detail: loggedIn,
+            userId,
           };
           return res.render("category", templateVars);
         }

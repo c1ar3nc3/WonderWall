@@ -6,8 +6,8 @@
   <body>
     <%- include("./partials/navbar") %>
       <div class="container">
-        <div class="row">
-          <div class="col-lg-3">
+        <div class="row" style="flex-wrap: nowrap; position: fixed;">
+          <div class="col-lg-3" id="category-bar">
             <h1 class="my-4">Explore...</h1>
             <% for (let category of categories) { %>
               <div class="list-group">
