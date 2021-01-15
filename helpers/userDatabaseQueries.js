@@ -28,7 +28,7 @@ const getUserById = (id) => {
       if (result.rows.length) {
         return result.rows;
       }
-      result.json({ message: "no resources found" });
+      return null;
     })
     .catch((err) => err.message);
 };

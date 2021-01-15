@@ -7,16 +7,36 @@
 
       <!-- Page Content -->
 
-          <!-- /.col-lg-3 -->
+      <!-- /.col-lg-3 -->
 
-          <div class="col-lg-9">
+      <div class="col-lg-9">
 
-            <%- include("./partials/posts") %>
-              <!-- /.row -->
-          </div>
-          <!-- /.col-lg-9 -->
+        <div class="row">
+          <% for (let post of posts) { %>
+            <div class="col-lg-4 col-md-6 mb-4">
+              <div class="card h-100">
+                <a href="/post_details/<%= post.id %>/"><img class="card-img-top" src="<%= post.image_url %>"
+                    alt="Post Image" /></a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="/post_details/<%= post.id %>/">
+                      <%= post.title %>
+                    </a>
+                  </h4>
+                  <p class="card-text">
+                    <%= post.post_description %>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <% } %>
         </div>
+
         <!-- /.row -->
+      </div>
+      <!-- /.col-lg-9 -->
+      </div>
+      <!-- /.row -->
       </div>
       <!-- /.container -->
 

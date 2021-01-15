@@ -12,6 +12,10 @@ const {
   postsOwnById,
   allLikedPostsByUser,
   postComments,
+  avgRateByPost,
+  avgRateAllPosts,
+  searchPostsByTitle,
+  postFeedById,
 } = require("../helpers/postDatabaseQueries");
 
 module.exports = (db) => {
@@ -21,17 +25,24 @@ module.exports = (db) => {
 
   //---------------- GET all posts to show all the posts------------
   router.get("/", (req, res) => {
-    db.query(
-      `
-    SELECT posts.*, post_categories.category as category, users.*
-    FROM posts
-    JOIN post_categories ON post_categories.id = category_id
-    JOIN users ON users.id = posts.owner_id ORDER BY date_created;`
-    )
+    const userId = req.session.user_id;
+    const getUserInfoPromise = Promise.resolve(getUserById(userId));
+    const allCategoriesPromise = Promise.resolve(getAllCategories());
+    const allPostsbyAvgRatePromise = Promise.resolve(avgRateAllPosts());
+    Promise.all([
+      getUserInfoPromise,
+      allCategoriesPromise,
+      allPostsbyAvgRatePromise,
+    ])
       .then((data) => {
-        const user = req.session.user_id;
-        const allPosts = data.rows;
-        const templateVars = { posts: allPosts, user };
+        const user = data[0][0];
+        const allCategories = data[1];
+        const allPosts = data[2];
+        const templateVars = {
+          user_detail: user,
+          posts: allPosts,
+          categories: allCategories,
+        };
         res.render("index", templateVars);
       })
       .catch((err) => {
@@ -39,27 +50,33 @@ module.exports = (db) => {
       });
   });
 
-  //----------------- GET new_post------------------------
+  //----------------- GET new_post form------------------------
   router.get("/new_post", (req, res) => {
-    const user = req.session.user_id;
-    const templateVars = { user };
-    res.render("new_post", templateVars);
+    const userId = req.session.user_id;
+    getUserById(userId).then((result) => {
+      const user = result[0];
+      const templateVars = { user_detail: user };
+      res.render("new_post", templateVars);
+    });
   });
 
   //----------------- GET post by 'title'------------------------
 
   router.post("/search", (req, res) => {
-    db.query(`SELECT * FROM posts WHERE title iLIKE $1;`, [
-      `%${req.body.title}%`,
-    ])
+    const userId = req.session.user_id;
+    const getUserInfoPromise = Promise.resolve(getUserById(userId));
+    const postsByTitlePromise = Promise.resolve(
+      searchPostsByTitle(req.body.title)
+    );
+    Promise.all([getUserInfoPromise, postsByTitlePromise])
       .then((result) => {
-        const user = req.session.user_id;
-        if (result.rows.length) {
-          const allPosts = result.rows;
-          const templateVars = { posts: allPosts, user };
+        const user = result[0][0];
+        if (result[1].length) {
+          const allPosts = result[1];
+          const templateVars = { posts: allPosts, user_detail: user };
           res.render("search", templateVars);
         } else {
-          const templateVars = { posts: [], user };
+          const templateVars = { posts: [], user_detail: user };
           res.render("search", templateVars);
         }
       })
@@ -69,14 +86,20 @@ module.exports = (db) => {
   //----------------- GET all posts for logged in user------------------
 
   router.get("/my_resources", (req, res) => {
-    const user = req.session.user_id;
-    const usersPost = Promise.resolve(postsOwnById(user));
-    const likedPosts = Promise.resolve(allLikedPostsByUser(user));
-    Promise.all([usersPost, likedPosts])
+    const userId = req.session.user_id;
+    const getUserInfoPromise = Promise.resolve(getUserById(userId));
+    const usersPost = Promise.resolve(postsOwnById(userId));
+    const likedPosts = Promise.resolve(allLikedPostsByUser(userId));
+    Promise.all([usersPost, likedPosts, getUserInfoPromise])
       .then((result) => {
         const myPosts = result[0];
         const likedPosts = result[1];
-        const templateVars = { likeObject: likedPosts, posts: myPosts, user };
+        const user = result[2][0];
+        const templateVars = {
+          likeObject: likedPosts,
+          posts: myPosts,
+          user_detail: user,
+        };
         res.render("my_resources", templateVars);
       })
       .catch((err) => res.status(400).json({ error: err.message }));
@@ -90,17 +113,24 @@ module.exports = (db) => {
     const postByIdPromise = Promise.resolve(getPostDetailsById(postId));
     const likedByUserPromise = Promise.resolve(likedPostByUser(userId, postId));
     const allCommentsPromise = Promise.resolve(postComments(postId));
+    const getUserInfoPromise = Promise.resolve(getUserById(userId));
 
-    Promise.all([postByIdPromise, likedByUserPromise, allCommentsPromise])
+    Promise.all([
+      postByIdPromise,
+      likedByUserPromise,
+      allCommentsPromise,
+      getUserInfoPromise,
+    ])
       .then((result) => {
         if (result.length) {
           const postDetails = result[0][0];
           const likedOrNot = result[1][0] || false;
           const commentsArray = result[2];
+          const user = result[3][0];
           const templateVars = {
             likeObject: likedOrNot,
             post_details: postDetails,
-            user: userId,
+            user_detail: user,
             comments: commentsArray,
           };
           return res.render("post_details", templateVars);
@@ -128,7 +158,7 @@ module.exports = (db) => {
           const templateVars = {
             posts: sortedPosts,
             categories,
-            user: userId,
+            user_detail: userId,
             userInfo: loggedIn,
           };
           return res.render("category", templateVars);
@@ -170,7 +200,7 @@ module.exports = (db) => {
           queryParams
         );
       })
-      .then((result) => res.redirect("/"))
+      .then(() => res.redirect("/"))
       .catch((err) => console.error(err.stack));
   });
 
@@ -196,7 +226,7 @@ module.exports = (db) => {
           );
         }
       })
-      .then((result) => res.redirect("back"))
+      .then(() => res.redirect("back"))
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
@@ -214,5 +244,39 @@ module.exports = (db) => {
       .catch((err) => res.status(400).json({ error: err.message }));
   });
 
+  //--------------------------------POST new rate------------------------
+  router.post("/post_details/:id/rate", (req, res) => {
+    postFeedById(req.params.id, req.session.user_id)
+      .then((result) => {
+        if (result.length) {
+          if (result[0].user_id == req.session.user_id) {
+            const queryParams = [
+              req.body.rating,
+              req.session.user_id,
+              result[0].post_id,
+            ];
+            db.query(
+              `UPDATE user_feedbacks SET rating = $1 WHERE user_id = $2 AND post_id = $3`,
+              queryParams
+            );
+          }
+        } else {
+          const queryParams = [
+            req.session.user_id,
+            req.params.id,
+            req.body.rating,
+          ];
+          db.query(
+            `INSERT INTO user_feedbacks (user_id, post_id, rating) VALUES ($1, $2, $3);`,
+            queryParams
+          );
+        }
+      })
+      .then(() => res.redirect("back"))
+      .catch((err) => res.status(400).json({ error: err.message }));
+  });
+
   return router;
 };
+
+// SELECT posts.id, posts.title, user_feedbacks.* FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE user_id = 1 AND post_id = 1;
