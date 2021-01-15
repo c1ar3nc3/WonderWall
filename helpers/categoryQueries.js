@@ -3,7 +3,7 @@ const { db } = require("../server.js");
 //Categories
 //-------Get all categories-------
 const getAllCategories = () => {
-  const queryString = `SELECT * FROM post_categories;`;
+  const queryString = `SELECT DISTINCT * FROM post_categories ORDER BY id;`;
   return db
     .query(queryString)
     .then((result) => {
@@ -67,5 +67,5 @@ module.exports = {
   getCategoryByPost,
   getCategoryByName,
   getAllCategories,
-  getPostsByCategoryId
+  getPostsByCategoryId,
 };

@@ -15,6 +15,7 @@ const {
   avgRateByPost,
   avgRateAllPosts,
   searchPostsByTitle,
+  postFeedById,
 } = require("../helpers/postDatabaseQueries");
 
 module.exports = (db) => {
@@ -245,22 +246,28 @@ module.exports = (db) => {
 
   //--------------------------------POST new rate------------------------
   router.post("/post_details/:id/rate", (req, res) => {
-    getPostDetailsById(req.params.id)
+    postFeedById(req.params.id, req.session.user_id)
       .then((result) => {
-        if (
-          result[result.length - 1].user_id &&
-          result[result.length - 1].post_id &&
-          result[result.length - 1].user_id == req.session.user_id
-        ) {
-          const queryParams = [req.session.user_id, result[0].post_id];
-          db.query(
-            `UPDATE user_feedbacks SET likes = NOT likes WHERE user_id = $1 AND post_id = $2`,
-            queryParams
-          );
+        if (result.length) {
+          if (result[0].user_id == req.session.user_id) {
+            const queryParams = [
+              req.body.rating,
+              req.session.user_id,
+              result[0].post_id,
+            ];
+            db.query(
+              `UPDATE user_feedbacks SET rating = $1 WHERE user_id = $2 AND post_id = $3`,
+              queryParams
+            );
+          }
         } else {
-          const queryParams = [req.session.user_id, result[0].post_id, "t"];
+          const queryParams = [
+            req.session.user_id,
+            req.params.id,
+            req.body.rating,
+          ];
           db.query(
-            `INSERT INTO user_feedbacks (user_id, post_id, likes) VALUES ($1, $2, $3);`,
+            `INSERT INTO user_feedbacks (user_id, post_id, rating) VALUES ($1, $2, $3);`,
             queryParams
           );
         }
@@ -271,3 +278,5 @@ module.exports = (db) => {
 
   return router;
 };
+
+// SELECT posts.id, posts.title, user_feedbacks.* FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE user_id = 1 AND post_id = 1;

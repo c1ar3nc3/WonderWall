@@ -47,14 +47,13 @@
             <div id="review-section">
               <div id="review-header">
                 <% if (!likeObject.likes) { %>
-                  <a href="/post_details/<%= post_details.post_id %> /like"><i class="fa fa-heart"
-                      data-likes="<%=  post_details.likes %>">LIKE</i></a>
+                  <a href="/post_details/<%= post_details.post_id %> /like"><i class="far fa-heart">LIKE</i></a>
                   <% } else { %>
-                    <a href="/post_details/<%= post_details.post_id %> /like"><i class="fa fa-heart"
+                    <a href="/post_details/<%= post_details.post_id %> /like"><i class="fas fa-heart"
                         data-likes="<%=  post_details.likes %>">UNLIKE</i></a>
                     <% } %>
               </div>
-              <form method="POST" , action="/......./<%= user_detail.id %>/reviews" id="review-contents">
+              <form method="POST" action="/post_details/<%= post_details.id %>/rate" id="review-contents">
                 <select name="rating" id="myselect">
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -64,13 +63,6 @@
                 </select>
                 <button class="review-component" id="submit-review" type="submit"><span></span>submit</span></button>
               </form>
-            </div>
-            <div>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
             </div>
         </div>
       </section>

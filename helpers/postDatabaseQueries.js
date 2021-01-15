@@ -110,6 +110,23 @@ const searchPostsByTitle = (title) => {
     })
     .catch((err) => console.error(err.stack));
 };
+
+/// feedbacks by post and id
+/**
+ * @return {Promise<{}>} A promise to the user.
+ */
+const postFeedById = (post_id, user_id) => {
+  return db
+    .query(
+      `SELECT DISTINCT posts.id, posts.title, user_feedbacks.* FROM posts LEFT JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE posts.id = $1 AND user_id =$2 ORDER BY user_feedbacks.id;`,
+      [post_id, user_id]
+    )
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => console.error(err.stack));
+};
+
 module.exports = {
   getPostDetailsById,
   likedPostByUser,
@@ -119,4 +136,5 @@ module.exports = {
   avgRateByPost,
   avgRateAllPosts,
   searchPostsByTitle,
+  postFeedById,
 };
