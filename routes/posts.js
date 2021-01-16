@@ -199,12 +199,6 @@ module.exports = (db) => {
           queryParams
         );
       })
-      // .then((result) => {
-      //   return db.query(
-      //     `INSERT INTO user_feedbacks (user_id, post_id) SELECT $1,id FROM posts ORDER BY id DESC LIMIT 1;`,
-      //     [req.session.user_id]
-      //   );
-      // })
       .then(() => {
         res.redirect("/");
       })
@@ -283,5 +277,3 @@ module.exports = (db) => {
 
   return router;
 };
-
-// SELECT posts.id, posts.title, user_feedbacks.* FROM posts JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE user_id = 1 AND post_id = 1;

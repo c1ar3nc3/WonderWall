@@ -1,10 +1,10 @@
 const { db } = require("../server.js");
+
 /// Posts Details By ID
 /**
  * @return {Promise<{}>} A promise to the user.
  */
 const getPostDetailsById = (id) => {
-  // const queryString = `SELECT DISTINCT posts.*, user_feedbacks.* FROM posts LEFT JOIN user_feedbacks ON posts.id = user_feedbacks.post_id WHERE posts.id = $1 ORDER BY user_feedbacks.id`;
   const queryString = `SELECT DISTINCT posts.* FROM posts WHERE id = $1 `;
   return db
     .query(queryString, [id])
@@ -28,7 +28,7 @@ const likedPostByUser = (user_id, post_id) => {
     .catch((err) => console.error(err.stack));
 };
 
-/// Posts Owner
+/// Posts someone owns
 /**
  * @return {Promise<{}>} A promise to the user.
  */

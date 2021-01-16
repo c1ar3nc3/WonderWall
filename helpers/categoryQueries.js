@@ -29,7 +29,7 @@ const getCategoryByPost = (post_id) => {
     .catch((err) => console.error(err.stack));
 };
 
-//-----Get all categories by category name------
+//-----Get category info by category name------
 const getCategoryByName = (category) => {
   const queryString = `
   SELECT category
@@ -46,6 +46,7 @@ const getCategoryByName = (category) => {
     .catch((err) => console.error(err.stack));
 };
 
+//---------Get all posts by a category ID----------
 const getPostsByCategoryId = (category_id) => {
   const queryString = `
   SELECT posts.*, post_categories.category as category
