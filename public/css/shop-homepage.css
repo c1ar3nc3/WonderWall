@@ -1,3 +1,5 @@
+/*                         CSS that overrides Bootstrap             */
+
 /* Background of the whole page */
 body {
   padding: 5em;
@@ -290,12 +292,7 @@ element.style {
   padding: 1.25rem;
 }
 
+/* created date */
 #created {
   font-weight: lighter;
 }
-
-/* #description-post {
-  flex-wrap: wrap;
-  padding-top: 1rem;
-
-} */
