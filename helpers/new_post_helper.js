@@ -1,8 +1,8 @@
 const { db } = require("../server.js");
 
 /**
- * Get a single user from the database given their id.
- * @param {string} id The id of the user.
+ * Get category ID by category name
+ * @param {string} name The id of the user.
  * @return {Promise<{}>} A promise to the user.
  */
 const getCategoryByName = (name) => {
