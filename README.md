@@ -1,17 +1,40 @@
-!["Home page"](https://github.com/DenysPyshniuk/resourceWall/blob/master/public/images/gitHub_screenshots/Screenshot-20210115175647-1918x974.png?raw=true)
-!["My posts"](https://github.com/DenysPyshniuk/resourceWall/blob/master/public/images/gitHub_screenshots/Screenshot-20210115175702-1918x974.png?raw=true)
-!["Profile page"](https://github.com/DenysPyshniuk/resourceWall/blob/master/public/images/gitHub_screenshots/Screenshot-20210115175726-1641x653.png?raw=true)
+## WonderWall Project
 
+WonderWall is a multi-page app that allows learners to save learning resources in a central place that is publicly available to any user. Posts include a title, description, image and link. Users have the ability to like, comment, and rate other posts. The likes and comments are linked to the currently logged in user. Likes are responsive. There is also a search feature based on posts the user has liked or by keyword.
 
+Created in collaboration with [Clarence Williams](https://github.com/c1ar3nc3) and [Sepehr Sobhani](https://github.com/Sepehr-Sobhani).
+
+## App Highlights:
+
+- users can save an external URL along with a title and description
+- users can search for already-saved resources created by any user
+- users can categorize any resource under a topic and create new categories
+- users can comment on any resource
+- users can rate any resource
+- users can change their ratings
+- users can like any resource
+- users can unlike any resource
+- users can view all their own and all liked resources on one page ("My resources")
+- users can register, log in, log out and update their profile
+
+- Home Page
+  !["Home page"](https://github.com/DenysPyshniuk/resourceWall/blob/master/public/images/gitHub_screenshots/Screenshot-20210115175647-1918x974.png?raw=true)
+- My Resources and Liked Page
+  !["My posts"](https://github.com/DenysPyshniuk/resourceWall/blob/master/public/images/gitHub_screenshots/Screenshot-20210115175702-1918x974.png?raw=true)
+- Profile Page
+  !["Profile page"](https://github.com/DenysPyshniuk/resourceWall/blob/master/public/images/gitHub_screenshots/Screenshot-20210115175726-1641x653.png?raw=true)
 
 LHL Node Skeleton
+
 ## Getting Started
 
 1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
 2. Update the .env file with your correct local information
-  - username: `labber`
-  - password: `labber`
-  - database: `midterm`
+
+- username: `labber`
+- password: `labber`
+- database: `midterm`
+
 3. Install dependencies: `npm i`
 4. Fix to binaries for sass: `npm rebuild node-sass`
 5. Reset database: `npm run db:reset`
@@ -38,3 +61,10 @@ LHL Node Skeleton
 - Node 10.x or above
 - NPM 5.x or above
 - PG 6.x
+- Express
+- EJS
+- Bcrypt
+- body-parser
+- Cookie-Session
+- Method-Override
+- Sass
