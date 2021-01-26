@@ -17,14 +17,14 @@ Created in collaboration with [Clarence Williams](https://github.com/c1ar3nc3) a
 - users can view all their own and all liked resources on one page ("My resources")
 - users can register, log in, log out and update their profile
 
+## Screenshots
+
 - Home Page
   !["Home page"](https://github.com/DenysPyshniuk/resourceWall/blob/master/public/images/gitHub_screenshots/Screenshot-20210115175647-1918x974.png?raw=true)
 - My Resources and Liked Page
   !["My posts"](https://github.com/DenysPyshniuk/resourceWall/blob/master/public/images/gitHub_screenshots/Screenshot-20210115175702-1918x974.png?raw=true)
 - Profile Page
   !["Profile page"](https://github.com/DenysPyshniuk/resourceWall/blob/master/public/images/gitHub_screenshots/Screenshot-20210115175726-1641x653.png?raw=true)
-
-LHL Node Skeleton
 
 ## Getting Started
 
