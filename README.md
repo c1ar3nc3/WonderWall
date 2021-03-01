@@ -1,11 +1,35 @@
+LHL Node Skeleton
+### Wonder Wall ###
+
+
+
+
+Option 7: Resource Wall
+Pinterest for learners.
+
+Allow learners to save learning resources like tutorials, blogs and videos in a central place that is publicly available to any user.
+
+Requirements:
+users should be able to save an external URL along with a title and description
+users should be able to search for already-saved resources created by any user
+users should be able to categorize any resource under a topic
+users should be able to comment on any resource
+users should be able to rate any resource
+users should be able to like any resource
+users should be able to view all their own and all liked resources on one page ("My resources")
+users should be able to register, log in, log out and update their profile
+
+
+
+
+
 !["Home page"](https://github.com/DenysPyshniuk/resourceWall/blob/master/public/images/gitHub_screenshots/Screenshot-20210115175647-1918x974.png?raw=true)
 !["My posts"](https://github.com/DenysPyshniuk/resourceWall/blob/master/public/images/gitHub_screenshots/Screenshot-20210115175702-1918x974.png?raw=true)
 !["Profile page"](https://github.com/DenysPyshniuk/resourceWall/blob/master/public/images/gitHub_screenshots/Screenshot-20210115175726-1641x653.png?raw=true)
 
 
 
-LHL Node Skeleton
-## Getting Started
+
 
 1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
 2. Update the .env file with your correct local information
