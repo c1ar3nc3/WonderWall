@@ -2,7 +2,7 @@
 
 WonderWall is a multi-page app that allows learners to save learning resources in a central place that is publicly available to any user. Posts include a title, description, image and link. Users have the ability to like, comment, and rate other posts. The likes and comments are linked to the currently logged in user. Likes are responsive. There is also a search feature based on posts the user has liked or by keyword.
 
-Created in collaboration with [Clarence Williams](https://github.com/c1ar3nc3) and [Sepehr Sobhani](https://github.com/Sepehr-Sobhani).
+Created in collaboration with [Denys Pyshniuk](https://github.com/DenysPyshniuk) and [Sepehr Sobhani](https://github.com/Sepehr-Sobhani).
 
 ## App Highlights:
 
